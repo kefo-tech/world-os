@@ -1,4 +1,4 @@
-const CACHE_NAME = "kefo-ui-cache-v2";
+const CACHE_NAME = "kefo-ui-cache-v3";
 const CORE = [
   "./",
   "./index.html",
@@ -8,45 +8,73 @@ const CORE = [
   "./icons/icon-512.png"
 ];
 
+// Install: خزّن الملفات الأساسية
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(CORE)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE))
+  );
   self.skipWaiting();
 });
 
+// Activate: امسح كل الكاشات القديمة ثم سيطر فوراً
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(k => (k !== CACHE_NAME ? caches.delete(k) : null)))
-    )
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)));
+      await self.clients.claim();
+    })()
   );
-  self.clients.claim();
 });
 
+// Fetch:
+// - HTML: Network First + fallback للكاش
+// - باقي الملفات: Stale-While-Revalidate (يعطي سرعة + يجدد بالخلفية)
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
 
-  const isHTML = req.headers.get("accept")?.includes("text/html");
+  const accept = req.headers.get("accept") || "";
+  const isHTML = accept.includes("text/html");
 
   if (isHTML) {
     event.respondWith(
-      fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then(c => c.put(req, copy));
-        return res;
-      }).catch(() => caches.match(req).then(r => r || caches.match("./index.html")))
+      (async () => {
+        try {
+          const fresh = await fetch(req, { cache: "no-store" });
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(req, fresh.clone());
+          return fresh;
+        } catch (e) {
+          const cached = await caches.match(req);
+          return cached || caches.match("./index.html");
+        }
+      })()
     );
     return;
   }
 
   event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then(c => c.put(req, copy));
-        return res;
-      });
-    }).catch(() => caches.match(req))
+    (async () => {
+      const cached = await caches.match(req);
+      const cache = await caches.open(CACHE_NAME);
+
+      const fetchPromise = fetch(req)
+        .then((res) => {
+          cache.put(req, res.clone());
+          return res;
+        })
+        .catch(() => null);
+
+      // لو موجود كاش أعطه فوراً وحدثه بالخلفية
+      if (cached) {
+        fetchPromise; // تحديث بالخلفية
+        return cached;
+      }
+
+      // لو ما في كاش: ارجع نتيجة الشبكة
+      const network = await fetchPromise;
+      return network || cached;
+    })()
   );
 });
