@@ -1,4 +1,5 @@
-const CACHE_NAME = "kefo-ui-cache-v3";
+const CACHE_NAME = "kefo-ui-cache-v4";
+
 const CORE = [
   "./",
   "./index.html",
@@ -8,7 +9,9 @@ const CORE = [
   "./icons/icon-512.png"
 ];
 
-// Install: خزّن الملفات الأساسية
+// =============================
+// INSTALL
+// =============================
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE))
@@ -16,20 +19,33 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
-// Activate: امسح كل الكاشات القديمة ثم سيطر فوراً
+// =============================
+// ACTIVATE
+// =============================
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       const keys = await caches.keys();
-      await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)));
+      await Promise.all(
+        keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null))
+      );
       await self.clients.claim();
     })()
   );
 });
 
-// Fetch:
-// - HTML: Network First + fallback للكاش
-// - باقي الملفات: Stale-While-Revalidate (يعطي سرعة + يجدد بالخلفية)
+// =============================
+// FORCE ACTIVATE FROM PAGE
+// =============================
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
+// =============================
+// FETCH STRATEGY
+// =============================
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
@@ -37,6 +53,7 @@ self.addEventListener("fetch", (event) => {
   const accept = req.headers.get("accept") || "";
   const isHTML = accept.includes("text/html");
 
+  // ---- HTML: Network First ----
   if (isHTML) {
     event.respondWith(
       (async () => {
@@ -54,6 +71,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // ---- ASSETS: Stale While Revalidate ----
   event.respondWith(
     (async () => {
       const cached = await caches.match(req);
@@ -66,13 +84,11 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(() => null);
 
-      // لو موجود كاش أعطه فوراً وحدثه بالخلفية
       if (cached) {
         fetchPromise; // تحديث بالخلفية
         return cached;
       }
 
-      // لو ما في كاش: ارجع نتيجة الشبكة
       const network = await fetchPromise;
       return network || cached;
     })()
