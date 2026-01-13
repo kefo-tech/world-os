@@ -1,4 +1,4 @@
-const CACHE_NAME = "kefo-ui-cache-v5";
+const CACHE_NAME = "kefo-ui-cache-v2";
 const CORE = [
   "./",
   "./index.html",
