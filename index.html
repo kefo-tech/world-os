@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- =========================
+       (1) إعدادات أساسية للصفحة
+  ========================== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>واجهة تقنية</title>
+
+  <!-- =========================
+       (2) تهيئة PWA (مهم للتثبيت)
+       - manifest: تعريف التطبيق (الاسم/الأيقونات/الألوان/العرض)
+       - theme-color: لون شريط المتصفح/التطبيق
+  ========================== -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00e6e6" />
+
+  <!-- دعم iOS (ليس تثبيت كامل مثل Android، لكنه يحسن التجربة) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- أيقونة iOS (ضع ملف فعلي في هذا المسار أو عدّل المسار) -->
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <style>
+    /* =========================
+       (3) إعدادات عامة (Global)
+    ========================== */
+    :root{
+      --bg:#121212;
+      --cyan:#00e6e6;
+      --panel: rgba(0,0,0,.75);
+      --panel2: rgba(0,0,0,.55);
+      --shadow: 0 0 15px rgba(0,255,255,.5);
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      padding:0;
+      height:100vh;
+      background: var(--bg);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color:#fff;
+      overflow:hidden;
+    }
+
+    /* =========================
+       (4) الحاوية الرئيسية + الخلفية
+       - background: خلفية متحركة مع blur
+    ========================== */
+    .container{
+      width:100%;
+      height:100%;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:space-between;
+      padding-top: 40px; /* مساحة لشريط الأخبار */
+      padding-bottom: 70px; /* مساحة لشريط الأسفل */
+    }
+
+    .background{
+      position:absolute;
+      inset:0;
+      background: url('https://source.unsplash.com/random/1920x1080?space') no-repeat center center;
+      background-size:cover;
+      animation: backgroundMove 30s linear infinite;
+      filter: blur(3px);
+      z-index:-2;
+    }
+
+    @keyframes backgroundMove{
+      0%{ background-position:center top; }
+      100%{ background-position:center bottom; }
+    }
+
+    /* هالة خفيفة */
+    .glow{
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle, rgba(0,255,255,.25), transparent 60%);
+      filter: blur(25px);
+      animation: glowAnimation 2s infinite alternate;
+      z-index:-1;
+      pointer-events:none;
+      opacity: .8; /* إصلاح: كان عندك opacity غير صالح */
+    }
+    @keyframes glowAnimation{
+      from{ opacity:.45; }
+      to{ opacity:.9; }
+    }
+
+    /* =========================
+       (5) شريط الأخبار العلوي RSS
+    ========================== */
+    #news{
+      display:flex;
+      overflow:hidden;
+      width:100%;
+      background:#000;
+      border-bottom:2px solid var(--cyan);
+      color:var(--cyan);
+      position:fixed;
+      top:0; left:0;
+      z-index:9999;
+      padding:4px 0;
+      box-shadow: 0 0 10px rgba(0,255,255,.5);
+    }
+
+    .news-wrapper{
+      display:flex;
+      align-items:center;
+      white-space:nowrap;
+      animation: scrollNews 220s linear infinite;
+      gap: 35px;
+      padding-inline: 10px;
+    }
+
+    .news-card{
+      background:#000;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 60vw;
+    }
+
+    .news-card a{
+      text-decoration:none;
+      color:var(--cyan);
+      font-weight:700;
+      font-size: 16px;
+    }
+
+    /* تحريك الأخبار (من اليمين لليسار – مناسب للعربية) */
+    @keyframes scrollNews{
+      0%{ transform: translateX(100%); }
+      100%{ transform: translateX(-120%); }
+    }
+
+    /* =========================
+       (6) أزرار الواجهة الرئيسية
+    ========================== */
+    .main-buttons{
+      width: 100%;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 12px 14px;
+      justify-items: center;
+      align-content:start;
+      margin-top: 8px;
+    }
+
+    .main-buttons a{ text-decoration:none; }
+
+    .button{
+      background: rgba(0,0,0,.7);
+      border-radius: 50px;
+      width: 84px;
+      height: 84px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      cursor:pointer;
+      transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+      box-shadow: var(--shadow);
+      user-select:none;
+    }
+    .button img{
+      width: 66px;
+      height: 66px;
+      object-fit: contain;
+    }
+    .button span{
+      color: var(--cyan);
+      font-size: 12px;
+      margin-top: -6px;
+      font-weight: 700;
+      background: #000;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+    .button:hover{
+      transform: scale(1.08) rotate(6deg);
+      box-shadow: 0 0 50px rgba(0,255,255,.85);
+      background-color: rgba(0,255,255,.18);
+    }
+    .button:active{
+      transform: scale(1.0);
+      background-color: rgba(0,255,255,.32);
+    }
+
+    /* =========================
+       (7) سلايدر روابط (منتصف الشاشة)
+    ========================== */
+    .slider-container{
+      display:flex;
+      width: 860px;
+      align-items:center;
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      animation: slide 25s linear infinite;
+      gap: 16px;
+      padding-inline: 10px;
+      pointer-events:auto;
+    }
+
+    .slider-item{
+      text-align:center;
+      min-width: 190px;
+    }
+    .slider-item img{
+      width: 150px;
+      height: 110px;
+      border-radius: 10px;
+      box-shadow: 0 1px 10px rgba(220,220,225,1);
+      transform-origin:center;
+      transform: rotateY(15deg);
+      animation: rotate 9s ease-in-out infinite alternate;
+      cursor:pointer;
+    }
+    .slider-item h3{
+      color:#fff;
+      font-size: 16px;
+      margin: 2px 0;
+      background: rgba(145,112,35,.55);
+      border-radius: 8px;
+      padding: 2px 6px;
+    }
+    .slider-item p{
+      color:#fff;
+      font-size: 14px;
+      margin: 4px 18px;
+      background: rgba(0,0,0,.35);
+      border-radius: 8px;
+      padding: 2px 6px;
+    }
+
+    @keyframes slide{
+      from { transform: translate(3%, -50%); }
+      to   { transform: translate(-100%, -50%); }
+    }
+    @keyframes rotate{
+      from { transform: rotateY(25deg) scale(1); }
+      to   { transform: rotateY(-35deg) scale(1.05); }
+    }
+
+    /* =========================
+       (8) أزرار سفلية (City Buttons)
+    ========================== */
+    .city-buttons{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      width: 100%;
+      padding: 0 14px;
+      margin-bottom: 8px;
+      justify-items:center;
+    }
+
+    .city-button{
+      width: 86px;
+      height: 78px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap: 4px;
+      text-decoration:none;
+      color: var(--cyan);
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(0,230,230,.35); /* إصلاح: لون صالح */
+      border-radius: 50px;
+      cursor:pointer;
+      transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+      box-shadow: 0 0 15px rgba(0,255,255,.55);
+    }
+
+    .city-button img{
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+    }
+
+    .city-button span{
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 700;
+      background:#000;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .city-button:hover{
+      transform: scale(1.10);
+      box-shadow: 0 0 22px rgba(0,255,255,.9);
+      background-color: rgba(0,255,55,.25);
+    }
+
+    /* =========================
+       (9) شريط الأسفل (Start Bar)
+       - زر Start
+       - أزرار أيقونات
+       - مربع البحث
+       - زر تثبيت التطبيق (الجديد)
+    ========================== */
+    .start-bar{
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,.82);
+      padding: 6px 8px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-top: 2px solid var(--cyan);
+      box-shadow: 0 0 40px rgba(0,255,255,.45);
+      z-index: 9998;
+      gap: 10px;
+    }
+
+    .start-left{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 120px;
+    }
+
+    .start-button{
+      cursor:pointer;
+      width: 44px;
+      height: 44px;
+      border-radius: 50px;
+      background: rgba(0,0,0,.7);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      box-shadow: 0 0 30px rgba(0,255,255,.45);
+      transition: transform .25s ease, box-shadow .25s ease;
+      user-select:none;
+      border: 1px solid rgba(255,255,255,.25);
+    }
+    .start-button:hover{
+      transform: scale(1.05);
+      box-shadow: 0 0 45px rgba(0,255,255,.75);
+    }
+    .start-button img{
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .icon-buttons{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+    }
+    .icon-buttons .mini{
+      width: 38px;
+      height: 38px;
+      border-radius: 50px;
+      background: rgba(0,0,0,.7);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      box-shadow: 0 0 18px rgba(0,255,255,.45);
+      transition: transform .2s ease;
+    }
+    .icon-buttons .mini:hover{ transform: scale(1.08); }
+    .icon-buttons .mini img{
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .search-bar{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      background: rgba(255,255,255,.12);
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,230,230,.25);
+      min-width: 260px;
+    }
+    .search-bar input{
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 15px;
+    }
+    .search-bar button{
+      background: var(--cyan);
+      border: none;
+      padding: 6px 10px;
+      color: #121212;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: opacity .2s ease;
+      white-space: nowrap;
+    }
+    .search-bar button:hover{ opacity:.85; }
+
+    /* زر تثبيت التطبيق */
+    .install-btn{
+      background: rgba(0,230,230,.18);
+      border: 1px solid rgba(0,230,230,.5);
+      color: var(--cyan);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 0 18px rgba(0,255,255,.35);
+      transition: transform .2s ease, background-color .2s ease;
+    }
+    .install-btn:hover{
+      transform: scale(1.03);
+      background: rgba(0,230,230,.25);
+    }
+
+    /* =========================
+       (10) قائمة Start Menu
+    ========================== */
+    .start-menu{
+      position: fixed;
+      bottom: 64px;
+      left: 18px;
+      width: min(820px, 92vw);
+      display:none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--cyan);
+      border-radius: 18px;
+      background: rgba(0,0,0,.92);
+      box-shadow: 0 0 45px rgba(0,255,255,.45);
+      z-index: 9999;
+    }
+
+    .start-menu a{
+      text-decoration:none;
+      text-align:center;
+      color: var(--cyan);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding: 8px 6px;
+      border: 1px solid rgba(0,230,230,.55);
+      border-radius: 16px;
+      transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+      background: rgba(0,0,0,.7);
+      gap: 6px;
+    }
+    .start-menu a img{
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+    }
+    .start-menu a:hover{
+      transform: translateY(-6px);
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 0 16px rgba(0,230,230,.45);
+    }
+
+    /* =========================
+       (11) الوقت/التاريخ + الحقوق
+    ========================== */
+    .time-date{
+      position: fixed;
+      bottom: 68px;
+      right: 12px;
+      text-align: right;
+      z-index: 9998;
+      font-size: 12px;
+      color: rgba(255,255,255,.85);
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(0,230,230,.25);
+      border-radius: 12px;
+      padding: 6px 10px;
+      backdrop-filter: blur(4px);
+    }
+
+    .credits{
+      position: fixed;
+      bottom: 68px;
+      left: 12px;
+      z-index: 9998;
+      font-size: 10px;
+      color: rgba(255,255,255,.55);
+      background: rgba(0,0,0,.25);
+      border-radius: 10px;
+      padding: 6px 10px;
+      max-width: 55vw;
+    }
+
+    /* =========================
+       (12) نافذة منبثقة للتثبيت (Modal)
+    ========================== */
+    .modal-overlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 16px;
+    }
+    .modal{
+      width: min(560px, 96vw);
+      background: rgba(0,0,0,.9);
+      border: 1px solid rgba(0,230,230,.45);
+      border-radius: 18px;
+      box-shadow: 0 0 50px rgba(0,255,255,.35);
+      overflow: hidden;
+    }
+    .modal-header{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(0,230,230,.25);
+    }
+    .modal-title{
+      font-weight: 900;
+      color: var(--cyan);
+      font-size: 16px;
+    }
+    .modal-close{
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.25);
+      color: #fff;
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor:pointer;
+    }
+    .modal-body{
+      padding: 14px;
+      line-height: 1.8;
+      font-size: 14px;
+      color: rgba(255,255,255,.92);
+    }
+    .modal-actions{
+      display:flex;
+      gap: 10px;
+      padding: 0 14px 14px;
+      align-items:center;
+      justify-content: flex-end;
+    }
+    .primary{
+      background: var(--cyan);
+      color: #121212;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 900;
+      cursor:pointer;
+    }
+    .secondary{
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor:pointer;
+    }
+    .hint{
+      margin-top: 8px;
+      padding: 10px;
+      background: rgba(0,230,230,.08);
+      border: 1px solid rgba(0,230,230,.2);
+      border-radius: 14px;
+      font-size: 13px;
+      color: rgba(255,255,255,.9);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- شريط الأخبار -->
+  <section id="news"></section>
+
+  <div class="container">
+    <div class="background"></div>
+    <div class="glow"></div>
+
+    <!-- =========================
+         (A) الأزرار الرئيسية (Main Buttons)
+    ========================== -->
+    <div class="main-buttons">
+      <a href="go:pst">
+        <div class="button">
+          <img src="https://ia600603.us.archive.org/20/items/512_20241228/512.png" alt="postMaker">
+          <span>صانع المنشورات</span>
+        </div>
+      </a>
+
+      <a href="go:video">
+        <div class="button">
+          <img src="https://cdn3d.iconscout.com/3d/premium/thumb/video-upload-3d-icon-download-in-png-blend-fbx-gltf-file-formats--uploading-pack-user-interface-icons-9325699.png?f=webp" alt="video">
+          <span>فيديو تريند</span>
+        </div>
+      </a>
+
+      <a href="go:g0">
+        <div class="button">
+          <img src="https://cdn-icons-png.flaticon.com/512/2331/2331846.png" alt="games">
+          <span>ألعاب</span>
+        </div>
+      </a>
+
+      <a href="go:s1">
+        <div class="button">
+          <img src="https://cdn-icons-png.flaticon.com/512/2694/2694971.png" alt="research">
+          <span>بحث علمي</span>
+        </div>
+      </a>
+
+      <a href="go:lhome">
+        <div class="button">
+          <img src="https://www.freeiconspng.com/download/14040" alt="student">
+          <span>مساعد الطالب</span>
+        </div>
+      </a>
+
+      <a href="go:chat1">
+        <div class="button">
+          <img src="https://static.vecteezy.com/system/resources/thumbnails/022/597/448/small/3d-chat-message-notification-icon-png.png" alt="chat">
+          <span>دردشة عامة</span>
+        </div>
+      </a>
+
+      <a href="go:sy001r">
+        <div class="button">
+          <img src="https://static.vecteezy.com/system/resources/thumbnails/015/079/413/small_2x/fast-food-restaurant-png.png" alt="restaurants">
+          <span>المطاعم</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- =========================
+         (B) السلايدر (Slider)
+    ========================== -->
+    <div class="slider-container" id="slider">
+      <div class="slider-item">
+        <h3>Zakaria Kefo</h3>
+        <a href="https://www.youtube.com/@ZakariaKeFo" target="_blank" rel="noopener">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvXTv84bIkJ7rRuwtpj7o4AXwPM0ah1J6WnQ&s" alt="Zakaria Kefo">
+        </a>
+        <p>تابع قناتي اليوتيوب</p>
+      </div>
+
+      <div class="slider-item">
+        <h3>KEFOO GAMING</h3>
+        <a href="https://www.youtube.com/@keyfogaming" target="_blank" rel="noopener">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrnJ8G3RC1PEtbyQspfWiGe22rRU0sNtlLWA&s" alt="Kefoo Gaming">
+        </a>
+        <p>قناة يوتيوب تحديات وألعاب</p>
+      </div>
+
+      <div class="slider-item">
+        <h3> </h3>
+        <a href="go:infoadd">
+          <img src="https://qiyadey.com/wp-content/uploads/2022/02/6D004B6F-4BDA-4B34-A402-723573CA76EE.jpeg" alt="info">
+        </a>
+        <p> </p>
+      </div>
+
+      <div class="slider-item">
+        <h3> </h3>
+        <a href="go:infoadd">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEMw2XC9tv6nZvO6jWvkUdSD8O3DoDgwhJr744iyLTK4hmaX83lLhSdrLrZT8QbtfHthc&usqp=CAU" alt="info2">
+        </a>
+        <p> </p>
+      </div>
+
+      <div class="slider-item">
+        <h3> </h3>
+        <a href="go:infoadd">
+          <img src="https://tara-news.com/wp-content/uploads/2020/04/received_235562510966946.jpeg" alt="info3">
+        </a>
+        <p> </p>
+      </div>
+    </div>
+
+    <!-- =========================
+         (C) الأزرار السفلية (City Buttons)
+    ========================== -->
+    <div class="city-buttons" id="cityButtons">
+      <a href="http://action_share" class="city-button" onclick="saveLastCity('http://action_share')">
+        <img src="https://www.freeiconspng.com/thumbs/add-icon-png/user-add-icon---shine-set-add-new-user-add-user-30.png" alt="دعوة صديق">
+        <span>دعوة صديق</span>
+      </a>
+
+      <a href="http://action_search" class="city-button" onclick="saveLastCity('http://action_search')">
+        <img src="https://cdn-icons-png.freepik.com/512/3039/3039356.png" alt="تغيير المدينة">
+        <span>تغيير المدينة</span>
+      </a>
+
+      <a href="go:r001" class="city-button" onclick="saveLastCity('r001')">
+        <img src="https://cdn-icons-png.flaticon.com/512/3617/3617100.png" alt="راديو">
+        <span>راديو</span>
+      </a>
+
+      <a href="go:sossy" class="city-button" onclick="saveLastCity('go:sossy')">
+        <img src="https://cdn-icons-png.freepik.com/256/655/655958.png?semt=ais_hybrid" alt="إتصال الطوارئ">
+        <span>إتصال الطوارئ</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- =========================
+       (D) شريط أسفل الشاشة (Start Bar)
+  ========================== -->
+  <div class="start-bar">
+    <div class="start-left">
+      <div class="start-button" onclick="toggleStartMenu()" title="القائمة">
+        <img src="https://ia600604.us.archive.org/26/items/remastered_202501/%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A1%D9%A0%D9%A5_%D9%A1%D9%A1%D9%A0%D9%A5%D9%A4%D9%A3_remastered.gif" alt="Start">
+      </div>
+
+      <div class="icon-buttons">
+        <a class="mini" href="https://www.facebook.com/1ZakariaKefo/" target="_blank" rel="noopener" title="Facebook">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png" alt="Facebook">
+        </a>
+
+        <a class="mini" href="https://www.youtube.com/@ZakariaKeFo" target="_blank" rel="noopener" title="YouTube">
+          <img src="https://static-00.iconduck.com/assets.00/youtube-circle-icon-2048x2048-ymi7jg74.png" alt="YouTube">
+        </a>
+      </div>
+    </div>
+
+    <!-- زر تثبيت التطبيق (الجديد) -->
+    <button class="install-btn" id="installBtn" type="button" onclick="openInstallModal()">
+      تثبيت التطبيق
+    </button>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="ابحث هنا...">
+      <button type="button" onclick="performSearch()">بحث</button>
+    </div>
+  </div>
+
+  <!-- =========================
+       (E) قائمة Start Menu
+  ========================== -->
+  <div class="start-menu" id="startMenu">
+    <a href="https://twitter.com" target="_blank" rel="noopener">
+      <img src="https://cdn3d.iconscout.com/3d/free/thumb/free-twitter-x-3d-icon-download-in-png-blend-fbx-gltf-file-formats--social-media-logo-pack-logos-icons-8263987.png?f=webp" alt="X">
+      <div>X</div>
+    </a>
+
+    <a href="tg://" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+      <div>تيليغرام</div>
+    </a>
+
+    <a href="https://www.instagram.com" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/768px-Instagram_icon.png" alt="Instagram">
+      <div>إنستغرام</div>
+    </a>
+
+    <a href="tel:0" target="_blank" rel="noopener">
+      <img src="https://pngimg.com/uploads/phone/phone_PNG49006.png" alt="Call">
+      <div>إتصال</div>
+    </a>
+
+    <a href="geo:36.2021,37.1343?q=Aleppo" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Google_Maps_icon_%282015-2020%29.svg/1024px-Google_Maps_icon_%282015-2020%29.svg.png" alt="Maps">
+      <div>الخرائط</div>
+    </a>
+  </div>
+
+  <!-- الوقت/التاريخ -->
+  <div class="time-date">
+    <div id="time"></div>
+    <div id="date"></div>
+  </div>
+
+  <!-- حقوق -->
+  <div class="credits">
+    برمجة وتطوير زكريا كيفو / جميع الحقوق محفوظة
+  </div>
+
+  <!-- أصوات -->
+  <audio id="backgroundMusic" src="https://www.chosic.com/wp-content/uploads/2024/01/Cicadas-chosic.com_.mp3" autoplay loop></audio>
+  <audio id="clickSound" src="https://www.myinstants.com/media/sounds/switch-sound.mp3"></audio>
+
+  <!-- =========================
+       نافذة التثبيت (Modal)
+  ========================== -->
+  <div class="modal-overlay" id="installModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+      <div class="modal-header">
+        <div class="modal-title" id="installTitle">تثبيت الموقع كتطبيق</div>
+        <button class="modal-close" type="button" onclick="closeInstallModal()">إغلاق</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="installContent"></div>
+        <div class="hint" id="installHint"></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="secondary" type="button" onclick="closeInstallModal()">لاحقاً</button>
+        <button class="primary" id="installNowBtn" type="button" onclick="installAppNow()">تثبيت الآن</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       (1) سلايدر: ترتيب عشوائي + تكرار عناصر
+    ========================================================= */
+    const slider = document.getElementById('slider');
+
+    function shuffleItems() {
+      const items = Array.from(slider.children);
+      const shuffled = items
+        .map(item => ({ item, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ item }) => item);
+
+      slider.innerHTML = '';
+      shuffled.forEach(item => slider.appendChild(item));
+    }
+
+    function duplicateItems() {
+      const items = Array.from(slider.children);
+      items.forEach(item => slider.appendChild(item.cloneNode(true)));
+    }
+
+    shuffleItems();
+    duplicateItems();
+
+    /* =========================================================
+       (2) RSS أخبار: جلب + عرض + تحديث دوري
+    ========================================================= */
+    async function fetchRSS() {
+      const proxyUrl = 'https://api.allorigins.win/raw?url=';
+      const url = 'https://www.syria.tv/rss';
+
+      try {
+        const response = await fetch(proxyUrl + encodeURIComponent(url));
+        const xml = await response.text();
+
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xml, "application/xml");
+
+        const items = xmlDoc.querySelectorAll("item");
+        const newsContainer = document.getElementById('news');
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('news-wrapper');
+
+        items.forEach(item => {
+          const title = item.querySelector("title")?.textContent?.trim() || "خبر";
+          const link  = item.querySelector("link")?.textContent?.trim() || "#";
+
+          const newsItem = document.createElement('div');
+          newsItem.classList.add('news-card');
+          newsItem.innerHTML = `<a href="${link}" target="_blank" rel="noopener">${title}</a>`;
+          wrapper.appendChild(newsItem);
+        });
+
+        newsContainer.innerHTML = '';
+        newsContainer.appendChild(wrapper);
+      } catch (error) {
+        console.error('خطأ في جلب الأخبار:', error);
+      }
+    }
+
+    fetchRSS();
+    setInterval(fetchRSS, 120000);
+
+    /* =========================================================
+       (3) تغيير الخلفية (عشوائي) — تركت لك مكان لإضافة المزيد
+    ========================================================= */
+    function changeBackground() {
+      const backgrounds = [
+        'https://ia800808.us.archive.org/14/items/0afa-39422cdd-0dc-2a-5c-28d-902279c-89a/0afa39422cdd0dc2a5c28d902279c89a.png'
+      ];
+      const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+      document.querySelector('.background').style.backgroundImage = `url(${randomBackground})`;
+    }
+    setInterval(changeBackground, 5000);
+    changeBackground();
+
+    /* =========================================================
+       (4) قائمة Start Menu: إظهار/إخفاء
+    ========================================================= */
+    function toggleStartMenu() {
+      const menu = document.getElementById('startMenu');
+      menu.style.display = (menu.style.display === 'grid') ? 'none' : 'grid';
+    }
+
+    /* =========================================================
+       (5) الوقت والتاريخ (إصلاح مهم)
+    ========================================================= */
+    function updateTimeAndDate(){
+      const now = new Date();
+      const timeEl = document.getElementById('time');
+      const dateEl = document.getElementById('date');
+
+      // وقت
+      const time = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute:'2-digit', second:'2-digit' });
+
+      // تاريخ
+      const date = now.toLocaleDateString('ar-EG', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+      timeEl.textContent = time;
+      dateEl.textContent = date;
+    }
+    setInterval(updateTimeAndDate, 1000);
+    updateTimeAndDate();
+
+    /* =========================================================
+       (6) صوت النقر على الأزرار
+       - لاحظ: .button تتكرر بكثرة، هذا سيغطي أزرارك كلها
+    ========================================================= */
+    const clickSound = document.getElementById('clickSound');
+    document.querySelectorAll('.button, .city-button, .mini').forEach(btn => {
+      btn.addEventListener('click', () => {
+        try{
+          clickSound.currentTime = 0;
+          clickSound.play();
+        }catch(e){}
+      });
+    });
+
+    /* =========================================================
+       (7) بحث جوجل
+    ========================================================= */
+    function performSearch() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (query) window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+    }
+
+    /* =========================================================
+       (8) PWA: تسجيل Service Worker
+    ========================================================= */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try{
+          await navigator.serviceWorker.register('./sw.js');
+        }catch(e){
+          console.warn('Service Worker لم يتم تسجيله:', e);
+        }
+      });
+    }
+
+    /* =========================================================
+       (9) زر تثبيت التطبيق + نافذة منبثقة
+       - Android: beforeinstallprompt
+       - iOS: شرح Add to Home Screen
+    ========================================================= */
+    let deferredPrompt = null;
+
+    // نلتقط حدث التثبيت على Android (Chrome/Edge/Samsung Internet غالباً)
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // يمكن هنا إظهار زر التثبيت أو تمييزه
+      document.getElementById('installBtn').style.display = 'inline-block';
+    });
+
+    function isIOS(){
+      return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    }
+    function isInStandaloneMode(){
+      return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+    }
+
+    function openInstallModal(){
+      const modal = document.getElementById('installModal');
+      const content = document.getElementById('installContent');
+      const hint = document.getElementById('installHint');
+      const installNowBtn = document.getElementById('installNowBtn');
+
+      // إذا كان مثبتاً بالفعل
+      if (isInStandaloneMode()){
+        content.innerHTML = `
+          <div>التطبيق مثبت بالفعل ويعمل في وضع التطبيق.</div>
+        `;
+        hint.textContent = 'إذا أردت تحديثه، أغلقه وافتحه من جديد أو امسح الكاش.';
+        installNowBtn.style.display = 'none';
+        modal.style.display = 'flex';
+        return;
+      }
+
+      // iOS: لا يوجد prompt رسمي مثل Android
+      if (isIOS()){
+        content.innerHTML = `
+          <div><b>لتثبيت التطبيق على iPhone / iPad:</b></div>
+          <ol>
+            <li>افتح الموقع عبر Safari (المتصفح الأساسي في iOS).</li>
+            <li>اضغط زر <b>المشاركة</b> (Share).</li>
+            <li>اختر <b>إضافة إلى الشاشة الرئيسية</b> (Add to Home Screen).</li>
+            <li>اضغط <b>إضافة</b> وسيظهر التطبيق كأيقونة على الشاشة.</li>
+          </ol>
+        `;
+        hint.textContent = 'ملاحظة: في iOS يجب التثبيت من Safari وليس من بعض المتصفحات الأخرى.';
+        installNowBtn.style.display = 'none';
+        modal.style.display = 'flex';
+        return;
+      }
+
+      // Android/غير iOS
+      if (deferredPrompt){
+        content.innerHTML = `
+          <div><b>يمكنك تثبيت التطبيق الآن بضغطة واحدة.</b></div>
+          <div>اضغط زر <b>تثبيت الآن</b> وسيظهر لك خيار التثبيت الرسمي من المتصفح.</div>
+        `;
+        hint.textContent = 'إذا لم يظهر التثبيت لاحقاً، افتح قائمة المتصفح ثم اختر: Install app / Add to Home Screen.';
+        installNowBtn.style.display = 'inline-block';
+      }else{
+        content.innerHTML = `
+          <div><b>التثبيت اليدوي (إذا لم يظهر زر التثبيت تلقائياً):</b></div>
+          <ol>
+            <li>افتح قائمة المتصفح (⋮).</li>
+            <li>اختر <b>Install app</b> أو <b>Add to Home screen</b>.</li>
+            <li>أكد الإضافة.</li>
+          </ol>
+        `;
+        hint.textContent = 'قد لا يظهر خيار التثبيت إذا كان الموقع غير HTTPS أو إذا لم تتوفر أيقونات/manifest بشكل صحيح.';
+        installNowBtn.style.display = 'none';
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeInstallModal(){
+      document.getElementById('installModal').style.display = 'none';
+    }
+
+    async function installAppNow(){
+      if (!deferredPrompt) return;
+      try{
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        // بعد محاولة التثبيت، نُفرغ المتغير
+        deferredPrompt = null;
+        closeInstallModal();
+        console.log('Install choice:', choice);
+      }catch(e){
+        console.warn('Install failed:', e);
+      }
+    }
+
+    // حدث بعد التثبيت (Android)
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      console.log('PWA installed');
+    });
+
+    /* =========================================================
+       (10) دالة اختيارية لأنك تستدعيها في onclick
+    ========================================================= */
+    function saveLastCity(value){
+      try{
+        localStorage.setItem('lastCity', value);
+      }catch(e){}
+    }
+  </script>
+</body>
+</html>
