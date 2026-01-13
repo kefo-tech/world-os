@@ -859,15 +859,40 @@
     }
 
     /* =========================================================
-       9) Service Worker (PWA)
-    ========================================================= */
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', async () => {
-        try{ await navigator.serviceWorker.register('./sw.js'); }
-        catch(e){ console.warn('SW register failed:', e); }
-      });
-    }
+   9) Service Worker (PWA) — تحديث فوري
+========================================================= */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", async () => {
+    try {
+      const reg = await navigator.serviceWorker.register("./sw.js");
 
+      // عند وصول SW جديد (تحديث)
+      reg.addEventListener("updatefound", () => {
+        const newWorker = reg.installing;
+        if (!newWorker) return;
+
+        newWorker.addEventListener("statechange", () => {
+          // إذا أصبح مثبتاً ويوجد SW قديم كان مسيطراً -> تحديث جاهز
+          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+            // اطلب منه التفعيل فوراً (يقابل skipWaiting)
+            newWorker.postMessage({ type: "SKIP_WAITING" });
+          }
+        });
+      });
+
+      // عند سيطرة SW الجديد: أعد تحميل الصفحة مرة واحدة فقط
+      let refreshed = false;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (refreshed) return;
+        refreshed = true;
+        window.location.reload();
+      });
+
+    } catch (e) {
+      console.warn("SW register failed:", e);
+    }
+  });
+}
     /* =========================================================
        10) تثبيت التطبيق:
        - Android: Prompt رسمي فقط عند الضغط
