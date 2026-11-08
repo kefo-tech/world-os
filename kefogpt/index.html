@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KeFo ai - منصة البحث الذكية</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===== شاشة الترحيب ===== -->
+<div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-content">
+        <div class="welcome-logo">KeFo <span>ai</span></div>
+        
+        <div class="welcome-icon">🚀</div>
+        
+        <h1>مرحباً بك في منصة KeFo</h1>
+        
+        <div class="welcome-text">
+            <p>📚 <strong>منصة ذكية لمساعدة الطلاب</strong> في أبحاثهم الدراسية</p>
+            <p>🔍 <strong>ابحث بكلمة أو كلمتين</strong> فقط للحصول على أفضل النتائج</p>
+            <p>📖 نستخدم <strong>معلومات مخزنة</strong> لدعم الطلاب بالبحوث العلمية الموثوقة</p>
+            <p>⚡ <strong>اختر من الخيارات</strong> التي تظهر لك للوصول للمعلومة الدقيقة</p>
+        </div>
+        
+        <button class="welcome-btn" id="welcomeBtn">
+            ✨ فهمت، لنبدأ
+        </button>
+        
+        <div class="welcome-footer">
+            © 2026 KeFo.tech - جميع الحقوق محفوظة
+        </div>
+    </div>
+    
+    <!-- خلفية متحركة -->
+    <div class="particles" id="particles"></div>
+</div>
+
+<!-- ===== شاشة المحادثة ===== -->
+<div class="app" id="chatApp" style="display: none;">
+    <!-- الهيدر -->
+    <div class="header">
+        <div class="logo">KeFo <span>ai</span></div>
+        <div class="badge">📚 مساعدة الطلاب</div>
+    </div>
+
+    <!-- منطقة المحادثة -->
+    <div class="chat-area" id="chatArea">
+        <div class="welcome-msg">
+            <!-- تم استبدال الأيقونة النصية بصورة متحركة -->
+            <img src="https://assets-v2.lottiefiles.com/a/fa2512b4-5d55-4ace-997f-79cbb0707cba/Kud4m3RTIp.gif" 
+                 alt="KeFo ai Logo" 
+                 class="welcome-icon-image" />
+            مرحباً في KeFo ai<br />
+            <small>ابحث بكلمة أو كلمتين، وسأساعدك في بحثك</small>
+        </div>
+    </div>
+
+    <!-- حقل الإدخال + حقوق الملكية -->
+    <div class="input-wrapper">
+        <div class="input-area">
+            <input type="text" id="messageInput" placeholder="اكتب كلمة أو كلمتين..." />
+            <button id="sendBtn">➤</button>
+        </div>
+        <div class="footer-rights">
+            © 2026 KeFo.tech - جميع الحقوق محفوظة
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
