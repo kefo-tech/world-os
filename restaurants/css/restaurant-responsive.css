@@ -1,0 +1,352 @@
+/* =========================================================
+   KEFO  FOOD
+   RESTAURANT-RESPONSIVE.CSS
+========================================================= */
+
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (max-width:1024px){
+
+.restaurant-hero{
+
+height:205px;
+
+}
+
+.restaurant-hero-content h1{
+
+font-size:1.8rem;
+
+}
+
+}
+
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width:768px){
+
+body.restaurant-page{
+
+padding-bottom:120px;
+
+}
+
+/* HERO */
+
+.restaurant-hero{
+
+height:185px;
+
+}
+
+.restaurant-hero-content h1{
+
+font-size:1.55rem;
+
+}
+
+.restaurant-hero-content p{
+
+font-size:.86rem;
+
+}
+
+/* INFO */
+
+.restaurant-info{
+
+padding:16px 12px;
+
+gap:8px;
+
+}
+
+.restaurant-info-card{
+
+padding:12px 6px;
+
+border-radius:16px;
+
+font-size:1rem;
+
+}
+
+.restaurant-info-card span{
+
+font-size:.66rem;
+
+}
+
+/* FILTERS */
+
+.restaurant-filters{
+
+padding:12px;
+
+gap:10px;
+
+}
+
+.restaurant-filter{
+
+min-width:78px;
+
+height:40px;
+
+font-size:.78rem;
+
+}
+
+/* MENU */
+
+.restaurant-menu{
+
+padding:14px 12px;
+
+gap:12px;
+
+}
+
+.meal-card{
+
+padding:8px;
+
+border-radius:18px;
+
+gap:10px;
+
+}
+
+.meal-image{
+
+width:100px;
+
+height:85px;
+
+border-radius:12px;
+
+}
+
+.meal-content h3{
+
+font-size:1rem;
+
+}
+
+.meal-price{
+
+font-size:.86rem;
+
+}
+
+.meal-content p{
+
+font-size:.74rem;
+
+}
+
+/* NAV */
+
+.restaurants-bottom-nav{
+
+height:76px;
+
+bottom:22px;
+
+border-radius:22px;
+
+}
+
+.restaurants-nav-btn{
+
+font-size:.70rem;
+
+}
+
+.restaurants-nav-add{
+
+width:82px;
+
+height:82px;
+
+margin-top:-28px;
+
+}
+
+}
+
+
+/* ==========================
+   SMALL PHONES
+========================== */
+
+@media (max-width:480px){
+
+.restaurant-hero{
+
+height:170px;
+
+}
+
+.restaurant-hero-content{
+
+padding:14px;
+
+}
+
+.restaurant-hero-content h1{
+
+font-size:1.35rem;
+
+}
+
+.restaurant-hero-content p{
+
+font-size:.76rem;
+
+}
+
+/* INFO */
+
+.restaurant-info{
+
+grid-template-columns:
+
+repeat(2,1fr);
+
+}
+
+.restaurant-info-card{
+
+padding:14px 8px;
+
+}
+
+/* FILTER */
+
+.restaurant-filter{
+
+min-width:72px;
+
+height:38px;
+
+font-size:.72rem;
+
+}
+
+/* MENU */
+
+.meal-card{
+
+gap:8px;
+
+}
+
+.meal-image{
+
+width:92px;
+
+height:78px;
+
+}
+
+.meal-content h3{
+
+font-size:.90rem;
+
+}
+
+.meal-content p{
+
+font-size:.68rem;
+
+line-height:1.55;
+
+}
+
+.meal-fav-btn{
+
+font-size:1.1rem;
+
+}
+
+/* NAV */
+
+.restaurants-bottom-nav{
+
+left:8px;
+
+right:8px;
+
+height:72px;
+
+}
+
+.restaurants-nav-add{
+
+width:76px;
+
+height:76px;
+
+}
+
+.restaurants-nav-add span{
+
+font-size:.62rem;
+
+}
+
+.restaurants-copyright{
+
+font-size:.62rem;
+
+}
+
+}
+
+
+/* ==========================
+   EXTRA SMALL
+========================== */
+
+@media (max-width:360px){
+
+.restaurant-hero-content h1{
+
+font-size:1.15rem;
+
+}
+
+.restaurant-info-card{
+
+font-size:.92rem;
+
+}
+
+.meal-image{
+
+width:84px;
+
+height:72px;
+
+}
+
+.restaurant-filter{
+
+min-width:66px;
+
+}
+
+.restaurants-nav-btn{
+
+font-size:.62rem;
+
+}
+
+}
