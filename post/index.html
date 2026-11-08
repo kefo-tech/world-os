@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>مولد منشورات ورسائل تلقائية | KeFo.tech</title>
+  <meta name="description" content="أنشئ منشورات ورسائل تلقائية بتصميم أنيق، مع إمكانية مشاركتها كصورة." />
+  <meta name="theme-color" content="#0f2b24" />
+
+  <!-- مكتبة تحويل HTML إلى صورة -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #071b16, #0f2b24);
+      font-family: 'Tahoma', 'Arial', sans-serif;
+      padding: 20px;
+      padding-bottom: 100px;
+    }
+
+    .container {
+      max-width: 550px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ===== البطاقة الرئيسية ===== */
+    .main-card {
+      background: linear-gradient(145deg, #11372d, #0a251e);
+      border-radius: 32px;
+      padding: 30px 25px;
+      text-align: center;
+      border: 1px solid #d8b36a;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+    }
+
+    .ornament {
+      color: #d8b36a;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .ornament span {
+      display: inline-block;
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d8b36a, transparent);
+      vertical-align: middle;
+      margin: 0 8px;
+    }
+
+    .quote-text {
+      color: #fffdf7;
+      line-height: 1.8;
+      padding: 20px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 24px;
+      margin: 15px 0;
+      min-height: 150px;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .dynamic-font {
+      font-size: 26px;
+      transition: font-size 0.1s ease;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background: #d8b36a;
+      animation: blink 0.8s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .brand {
+      margin-top: 20px;
+      color: #d8b36a;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .brand small {
+      display: block;
+      color: #78c4a4;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    /* ===== مربع البحث ===== */
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 60px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 14px;
+      margin-bottom: 15px;
+      text-align: right;
+    }
+
+    .search-box::placeholder {
+      color: #aaa;
+    }
+
+    .info {
+      color: #78c4a4;
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    /* ===== الأزرار الثابتة في الأسفل ===== */
+    .fixed-bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, #071b16, transparent);
+      padding: 15px 20px 25px;
+      text-align: center;
+      z-index: 100;
+    }
+
+    .share-fixed-btn {
+      background: linear-gradient(135deg, #d8b36a, #b8893a);
+      border: none;
+      padding: 14px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f1708;
+      border-radius: 60px;
+      cursor: pointer;
+      width: 90%;
+      max-width: 300px;
+      margin: 0 auto 12px auto;
+      display: block;
+      transition: 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .share-fixed-btn:active {
+      transform: scale(0.97);
+    }
+
+    .copyright {
+      color: #9dc4b4;
+      font-size: 11px;
+      text-align: center;
+      background: rgba(0,0,0,0.5);
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, #2f8f6b, #1d5e46);
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      border-radius: 60px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    .refresh-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* ===== رسالة التحميل ===== */
+    .loading {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      color: #d8b36a;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 13px;
+      z-index: 1000;
+      white-space: nowrap;
+    }
+
+    /* ===== مودال التنبيه الجميل (بديل الـ alert) ===== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-box {
+      background: linear-gradient(145deg, #11372d, #0a251e);
+      border: 1px solid #d8b36a;
+      border-radius: 32px;
+      padding: 35px 30px 30px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-box {
+      transform: scale(1);
+    }
+
+    .modal-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .modal-title {
+      color: #fffdf7;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .modal-message {
+      color: #d5d0c3;
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    .modal-btn {
+      background: linear-gradient(135deg, #d8b36a, #b8893a);
+      border: none;
+      padding: 12px 40px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #1f1708;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+      min-width: 120px;
+    }
+
+    .modal-btn:active {
+      transform: scale(0.97);
+    }
+
+    .modal-btn-success {
+      background: linear-gradient(135deg, #2f8f6b, #1d5e46);
+      color: white;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث داخل المنشورات... (مثل: أمل، نجاح، حكمة)" autocomplete="off">
+  <div class="info" id="searchHint"></div>
+
+  <div class="main-card">
+    <div class="ornament">
+      <span></span> ✨ <span></span>
+    </div>
+    <div class="quote-text dynamic-font" id="quoteText"></div>
+    <div class="brand">
+      KeFo.tech
+      <small>مولد منشورات تلقائية</small>
+    </div>
+  </div>
+
+  <button class="refresh-btn" id="randomBtn">🔄 منشور جديد</button>
+</div>
+
+<!-- الأزرار الثابتة في الأسفل -->
+<div class="fixed-bottom">
+  <button class="share-fixed-btn" id="shareImageBtn">📸 مشاركة كصورة (بطاقة واحدة)</button>
+  <div class="copyright">© KeFo.tech — جميع الحقوق محفوظة | مولد منشورات ورسائل تلقائية</div>
+</div>
+
+<!-- ===== مودال التنبيه (بديل الـ alert) ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <span class="modal-icon" id="modalIcon">✅</span>
+    <div class="modal-title" id="modalTitle">تم بنجاح</div>
+    <div class="modal-message" id="modalMessage">تمت المشاركة بنجاح</div>
+    <button class="modal-btn" id="modalBtn">حسناً</button>
+  </div>
+</div>
+
+<script src="quotes.js"></script>
+
+<script>
+  // ========== البيانات ==========
+  const quotes = Array.isArray(window.QUOTES) ? window.QUOTES : [];
+
+  // ========== العناصر ==========
+  const quoteTextEl = document.getElementById("quoteText");
+  const randomBtn = document.getElementById("randomBtn");
+  const shareImageBtn = document.getElementById("shareImageBtn");
+  const searchInput = document.getElementById("searchInput");
+  const searchHint = document.getElementById("searchHint");
+
+  // عناصر المودال
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalIcon = document.getElementById("modalIcon");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalMessage = document.getElementById("modalMessage");
+  const modalBtn = document.getElementById("modalBtn");
+
+  let currentQuote = "";
+  let isAnimating = false;
+  let cycleTimeout = null;
+  let typeInterval = null;
+  let eraseInterval = null;
+  let filteredQuotes = [...quotes];
+
+  const TYPING_SPEED = 85;
+  const ERASING_SPEED = 28;
+  const READING_DELAY = 5000;
+
+  // ========== دوال المودال ==========
+  function showModal(icon, title, message, isSuccess = true) {
+    modalIcon.textContent = icon;
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    modalBtn.className = 'modal-btn' + (isSuccess ? ' modal-btn-success' : '');
+    modalOverlay.classList.add('active');
+  }
+
+  function hideModal() {
+    modalOverlay.classList.remove('active');
+  }
+
+  // إغلاق المودال عند الضغط على الزر أو خلفية المودال
+  modalBtn.addEventListener('click', hideModal);
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) hideModal();
+  });
+
+  // ========== دوال البحث ==========
+  function normalizeArabic(text) {
+    return text.toLowerCase()
+      .replace(/[أإآٱ]/g, "ا")
+      .replace(/ى/g, "ي")
+      .replace(/ة/g, "ه")
+      .replace(/[ًٌٍَُِْ]/g, "");
+  }
+
+  function getPool() {
+    return filteredQuotes.length ? filteredQuotes : [];
+  }
+
+  function getRandomQuote() {
+    const pool = getPool();
+    if (!pool.length) return null;
+    let newQuote;
+    do { newQuote = pool[Math.floor(Math.random() * pool.length)]; }
+    while (newQuote === currentQuote && pool.length > 1);
+    return newQuote;
+  }
+
+  function updateSearchHint() {
+    const keyword = searchInput.value.trim();
+    if (!keyword) {
+      searchHint.textContent = `📖 ${quotes.length} منشوراً متاحاً`;
+      filteredQuotes = [...quotes];
+    } else {
+      const normalizedKeyword = normalizeArabic(keyword);
+      filteredQuotes = quotes.filter(q => normalizeArabic(q).includes(normalizedKeyword));
+      searchHint.textContent = filteredQuotes.length ? `🔍 ${filteredQuotes.length} نتيجة لكلمة "${keyword}"` : `❌ لا توجد نتائج لـ "${keyword}"`;
+    }
+    restartCycle();
+  }
+
+  // ========== ضبط حجم الخط ==========
+  function adjustFontSize(text, element, isForImage = false) {
+    const length = text.length;
+    let fontSize;
+    if (length > 100) fontSize = 18;
+    else if (length > 70) fontSize = 21;
+    else if (length > 45) fontSize = 24;
+    else fontSize = 28;
+    
+    if (isForImage) return fontSize;
+    element.style.fontSize = fontSize + 'px';
+    return fontSize;
+  }
+
+  // ========== تأثير الآلة الكاتبة ==========
+  function typeText(text, onDone) {
+    let i = 0;
+    quoteTextEl.innerHTML = "";
+    adjustFontSize(text, quoteTextEl, false);
+    
+    typeInterval = setInterval(() => {
+      i++;
+      quoteTextEl.innerHTML = text.slice(0, i) + `<span class="cursor"></span>`;
+      if (i >= text.length) {
+        clearInterval(typeInterval);
+        if (onDone) onDone();
+      }
+    }, TYPING_SPEED);
+  }
+
+  function eraseText(onDone) {
+    let text = currentQuote;
+    let i = text.length;
+    eraseInterval = setInterval(() => {
+      i--;
+      if (i <= 0) {
+        quoteTextEl.innerHTML = `<span class="cursor"></span>`;
+        clearInterval(eraseInterval);
+        if (onDone) onDone();
+      } else {
+        quoteTextEl.innerHTML = text.slice(0, i) + `<span class="cursor"></span>`;
+      }
+    }, ERASING_SPEED);
+  }
+
+  function startCycle() {
+    if (isAnimating) return;
+    const nextQuote = getRandomQuote();
+    if (!nextQuote) return;
+
+    currentQuote = nextQuote;
+    isAnimating = true;
+
+    typeText(currentQuote, () => {
+      cycleTimeout = setTimeout(() => {
+        eraseText(() => {
+          isAnimating = false;
+          startCycle();
+        });
+      }, READING_DELAY);
+    });
+  }
+
+  function restartCycle() {
+    clearTimeout(cycleTimeout);
+    clearInterval(typeInterval);
+    clearInterval(eraseInterval);
+    isAnimating = false;
+    startCycle();
+  }
+
+  // ========== إنشاء صورة ومشاركتها ==========
+  async function shareAsSingleImage() {
+    if (!currentQuote) {
+      showModal('⚠️', 'لا توجد رسالة', 'لا توجد رسالة للمشاركة حالياً', false);
+      return;
+    }
+
+    const imageFontSize = adjustFontSize(currentQuote, null, true);
+
+    // ============================================================
+    // 🔧 **مكان تعديل أبعاد الصورة**
+    // غيّر القيمتين أدناه (width و padding) حسب ما يناسبك
+    // ============================================================
+    const CARD_WIDTH = '450px';        // ← غير هذا الرقم لتوسيع أو تضييق البطاقة
+    const CARD_PADDING = '40px 30px';  // ← غير هذا لتعديل المسافات الداخلية
+    // ============================================================
+
+    const template = document.createElement('div');
+    template.style.position = 'fixed';
+    template.style.left = '-9999px';
+    template.style.top = '0';
+    template.style.background = 'linear-gradient(145deg, #0a251e, #11372d)';
+    template.style.width = CARD_WIDTH;
+    template.style.padding = CARD_PADDING;
+    template.style.borderRadius = '40px';
+    template.style.textAlign = 'center';
+    template.style.fontFamily = 'Tahoma, Arial, sans-serif';
+    template.style.border = '2px solid #d8b36a';
+    template.style.boxShadow = '0 20px 40px rgba(0,0,0,0.5)';
+
+    template.innerHTML = `
+      <div style="margin-bottom: 20px;">
+        <div style="color: #d8b36a; font-size: 40px;">✨</div>
+        <div style="height: 2px; width: 80px; background: linear-gradient(90deg, transparent, #d8b36a, transparent); margin: 10px auto;"></div>
+      </div>
+      <div style="background: rgba(0,0,0,0.2); border-radius: 28px; padding: 30px 25px; margin: 15px 0;">
+        <div style="color: #fffdf7; font-size: ${imageFontSize}px; line-height: 1.8; font-weight: 500;">${currentQuote}</div>
+      </div>
+      <div style="margin-top: 20px;">
+        <div style="color: #d8b36a; font-size: 24px; font-weight: bold;">KeFo.tech</div>
+        <div style="color: #78c4a4; font-size: 13px; margin-top: 5px;">مولد منشورات تلقائية</div>
+        <div style="color: #9dc4b4; font-size: 11px; margin-top: 8px;">https://kefo-tech.github.io/syria/</div>
+      </div>
+      <div style="margin-top: 20px;">
+        <div style="height: 1px; width: 60px; background: #d8b36a; margin: 0 auto;"></div>
+      </div>
+    `;
+
+    document.body.appendChild(template);
+
+    let loadingDiv = document.querySelector('.loading');
+    if (!loadingDiv) {
+      loadingDiv = document.createElement('div');
+      loadingDiv.className = 'loading';
+      document.body.appendChild(loadingDiv);
+    }
+    loadingDiv.textContent = '⏳ جاري إنشاء البطاقة...';
+    loadingDiv.style.display = 'block';
+
+    try {
+      await new Promise(r => setTimeout(r, 50));
+
+      const canvas = await html2canvas(template, {
+        scale: 2.5,
+        backgroundColor: '#0a251e',
+        logging: false
+      });
+
+      document.body.removeChild(template);
+      loadingDiv.style.display = 'none';
+
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 0.95));
+
+      if (navigator.share && navigator.canShare && blob) {
+        const file = new File([blob], 'post.png', { type: 'image/png' });
+        try {
+          await navigator.share({
+            title: 'منشور | KeFo.tech',
+            files: [file]
+          });
+          showModal('✅', 'تمت المشاركة', 'تمت مشاركة البطاقة بنجاح');
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            downloadImage(canvas);
+          }
+        }
+      } else {
+        downloadImage(canvas);
+      }
+    } catch (error) {
+      console.error(error);
+      document.body.removeChild(template);
+      loadingDiv.style.display = 'none';
+      showModal('❌', 'حدث خطأ', 'حدث خطأ أثناء إنشاء الصورة، حاول مرة أخرى', false);
+    }
+  }
+
+  function downloadImage(canvas) {
+    const link = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+    link.download = `kefo_post_${date}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showModal('✅', 'تم التحميل', 'تم تحميل الصورة بنجاح');
+  }
+
+  // ========== ربط الأحداث ==========
+  randomBtn.addEventListener('click', () => restartCycle());
+  shareImageBtn.addEventListener('click', () => shareAsSingleImage());
+  searchInput.addEventListener('input', updateSearchHint);
+
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('dragstart', e => e.preventDefault());
+
+  // بدء التشغيل
+  updateSearchHint();
+  startCycle();
+</script>
+</body>
+</html>
