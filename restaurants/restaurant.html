@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+    <!-- SEO & Social -->
+    <meta name="description" content="تفاصيل المطعم - KeFo Food">
+    <meta name="theme-color" content="#7d1523">
+    <meta property="og:title" content="KeFo Food | تفاصيل المطعم">
+    <meta property="og:description" content="تصفح قائمة الطعام، قيّم المطعم، اتصل، أو احصل على الاتجاهات">
+    <meta property="og:type" content="website">
+    
+    <title>KeFo Food | المطعم</title>
+
+    <link rel="stylesheet" href="./css/restaurant-responsive.css">
+    <link rel="stylesheet" href="./css/protection.css">
+</head>
+
+<body class="restaurant-page">
+
+    <!-- SKELETON LOADER -->
+    <div id="skeletonLoader" class="skeleton-container">
+        <div class="skeleton-hero"></div>
+        <div class="skeleton-rating-row"></div>
+        <div class="skeleton-info-row"></div>
+        <div class="skeleton-filters">
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+        </div>
+        <div class="skeleton-cards">
+            <div class="skeleton-meal-card"></div>
+            <div class="skeleton-meal-card"></div>
+            <div class="skeleton-meal-card"></div>
+        </div>
+    </div>
+
+    <!-- HEADER WITH BACK BUTTON -->
+    <header class="restaurant-top-bar">
+        <button id="backBtn" class="back-btn" aria-label="العودة للقائمة">
+            ←
+            <span>رجوع</span>
+        </button>
+        <span class="top-bar-title">KeFo Food</span>
+        <button id="shareRestaurantBtn" class="share-btn" aria-label="مشاركة المطعم">
+            📤
+        </button>
+    </header>
+
+    <!-- HERO -->
+    <section class="restaurant-hero">
+        <img id="restaurantCover" 
+             class="restaurant-cover" 
+             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5" 
+             alt="صورة المطعم"
+             onerror="this.src='https://images.unsplash.com/photo-1552566626-52f8b828add9'">
+        <div class="restaurant-overlay"></div>
+        <div class="restaurant-hero-content">
+            <h1 id="restaurantName">جار التحميل...</h1>
+            <p id="restaurantDescription">...</p>
+            <div class="restaurant-hero-meta">
+                <span id="restaurantRating">⭐ ---</span>
+                <span id="restaurantDistance">📍 جاري التحديد...</span>
+                <span id="restaurantStatus">🟡 ...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- RATING ROW -->
+    <section class="restaurant-rating-row" id="ratingRow">
+        <div class="rating-stars-display">
+            <span id="ratingAverage" class="rating-average">---</span>
+            <div id="ratingStarsDisplay" class="stars-display"></div>
+            <span id="ratingCount" class="rating-count">(0 تقييم)</span>
+        </div>
+        <button id="rateRestaurantBtn" class="rate-btn">
+            ⭐ قيّم المطعم
+        </button>
+    </section>
+
+    <!-- RATING MODAL -->
+    <div id="ratingModal" class="rating-modal" style="display:none;">
+        <div class="rating-modal-content">
+            <button id="closeRatingModal" class="rating-modal-close">✕</button>
+            <h3>تقييمك للمطعم</h3>
+            <div id="ratingStarsInput" class="rating-stars-input">
+                <span data-star="1">☆</span>
+                <span data-star="2">☆</span>
+                <span data-star="3">☆</span>
+                <span data-star="4">☆</span>
+                <span data-star="5">☆</span>
+            </div>
+            <p id="ratingHint" class="rating-hint">اختر من 1 إلى 5 نجوم</p>
+            <div class="rating-modal-actions">
+                <button id="cancelRating" class="rating-cancel-btn">إلغاء</button>
+                <button id="submitRating" class="rating-submit-btn" disabled>إرسال التقييم</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK INFO (شريط مضغوط) -->
+    <section class="restaurant-quick-info">
+        <div class="quick-info-item">
+            <span class="quick-icon">🕐</span>
+            <span id="workingHours">---</span>
+        </div>
+        <div class="quick-info-item">
+            <span class="quick-icon">🚀</span>
+            <span id="deliveryInfo">---</span>
+        </div>
+        <div class="quick-info-item">
+            <span class="quick-icon">🍽️</span>
+            <span id="mealsCount">---</span>
+        </div>
+    </section>
+
+    <!-- SEARCH IN MENU -->
+    <div class="restaurant-menu-search">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" 
+                   id="menuSearchInput" 
+                   class="search-input" 
+                   placeholder="ابحث في القائمة..."
+                   autocomplete="off">
+            <button id="clearMenuSearch" class="search-clear" style="display:none;">✕</button>
+        </div>
+    </div>
+
+    <!-- MEAL FILTERS -->
+    <section id="filtersContainer" class="restaurant-filters" aria-label="تصنيفات الوجبات">
+        <button class="restaurant-filter active" data-category="all" aria-pressed="true">
+            🌟 الكل
+        </button>
+    </section>
+
+    <!-- ACTIVE FILTERS -->
+    <div id="activeFilters" class="active-filters" style="display:none;">
+        <span class="filter-label">التصفية:</span>
+        <span id="filterTag" class="filter-tag"></span>
+        <button id="clearFilters" class="filter-clear">✕ مسح</button>
+    </div>
+
+    <!-- RESULTS COUNT -->
+    <div id="resultsInfo" class="results-info" style="display:none;">
+        <span id="resultsCount"></span>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state" style="display:none;">
+        <div class="empty-icon">🍽️</div>
+        <h3>لا توجد وجبات</h3>
+        <p id="emptyMessage">لم نعثر على وجبات تطابق بحثك</p>
+        <button id="resetMenuSearch" class="empty-btn">عرض كل القائمة</button>
+    </div>
+
+    <!-- MENU -->
+    <main id="restaurantMenu" class="restaurant-menu" aria-live="polite">
+    </main>
+
+    <!-- BACK TO TOP -->
+    <button id="backToTop" class="back-to-top" title="العودة للأعلى" style="display:none;">
+        ⬆️
+    </button>
+
+    <!-- ACTION BAR -->
+    <section class="restaurant-action-bar">
+        <button id="favoriteRestaurantBtn" class="action-btn" aria-label="إضافة للمفضلة">
+            <span class="action-icon">🤍</span>
+            <span>المفضلة</span>
+        </button>
+        <a id="callBtn" href="#" class="action-btn" aria-label="اتصال">
+            <span class="action-icon">📞</span>
+            <span>اتصال</span>
+        </a>
+        <a id="whatsappBtn" href="#" target="_blank" class="action-btn" aria-label="واتساب">
+            <span class="action-icon">🟢</span>
+            <span>واتساب</span>
+        </a>
+        <a id="mapsBtn" href="#" target="_blank" class="action-btn" aria-label="الخرائط">
+            <span class="action-icon">🗺️</span>
+            <span>خرائط</span>
+        </a>
+    </section>
+
+    <!-- COPYRIGHT -->
+    <div class="restaurants-copyright">
+        © Syria OS | KeFo.tech 2026
+    </div>
+
+    <link rel="stylesheet" href="./css/restaurant.css?v=1.0.1">
+    <script type="module" src="./js/restaurant.js?v=1.0.1"></script>>
+    <script src="./js/protection.js"></script>
+
+</body>
+</html>
