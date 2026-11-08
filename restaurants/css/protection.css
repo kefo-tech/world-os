@@ -1,0 +1,152 @@
+/* =========================================================
+   SYRIA OS — RESTAURANTS MODULE
+   PROTECTION.CSS
+========================================================= */
+
+
+/* ==========================
+   GLOBAL
+========================== */
+
+.restaurants-body{
+
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+
+-webkit-touch-callout:none;
+
+-webkit-tap-highlight-color:transparent;
+
+touch-action:manipulation;
+
+overflow-x:hidden;
+
+}
+
+
+/* ==========================
+   INPUT SAFE ZONE
+========================== */
+
+input,
+textarea{
+
+-webkit-user-select:text !important;
+-moz-user-select:text !important;
+-ms-user-select:text !important;
+user-select:text !important;
+
+-webkit-touch-callout:default !important;
+
+outline:none;
+
+}
+
+
+/* ==========================
+   RIGHT CLICK HARDENING
+========================== */
+
+img,
+a,
+button,
+.restaurant-card,
+.restaurant-btn,
+.restaurant-fav-btn,
+.restaurants-category,
+.restaurants-nav-btn,
+.restaurants-nav-add{
+
+-webkit-touch-callout:none;
+
+}
+
+
+/* ==========================
+   IMAGE PROTECTION
+========================== */
+
+img{
+
+pointer-events:none;
+
+-webkit-user-drag:none;
+
+user-drag:none;
+
+}
+
+
+/* ==========================
+   DRAG BLOCK
+========================== */
+
+*{
+
+-webkit-user-drag:none;
+
+}
+
+
+/* ==========================
+   SELECTION BLOCK
+========================== */
+
+::selection{
+
+background:transparent;
+
+color:inherit;
+
+}
+
+::-moz-selection{
+
+background:transparent;
+
+color:inherit;
+
+}
+
+
+/* ==========================
+   SMOOTH SCROLL
+========================== */
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+
+/* ==========================
+   IOS SAFETY
+========================== */
+
+@supports (-webkit-touch-callout:none){
+
+body{
+
+-webkit-text-size-adjust:100%;
+
+}
+
+}
+
+
+/* ==========================
+   MOBILE HARDENING
+========================== */
+
+@media (hover:none){
+
+body{
+
+-webkit-touch-callout:none;
+
+}
+
+}
