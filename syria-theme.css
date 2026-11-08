@@ -1,0 +1,1938 @@
+:root{
+  --bg1:#071611;
+  --bg2:#0d2c23;
+  --bg3:#134236;
+  --bg4:#1c5a49;
+  --gold:#d5b06b;
+  --ink:#f7f2e6;
+  --muted:#d8ccb2;
+  --card-border:rgba(213,176,107,0.14);
+  --shadow:0 18px 45px rgba(0,0,0,.28);
+  --bottom-safe:122px;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
+
+body{
+  font-family:"Tahoma","Arial",sans-serif;
+  color:var(--ink);
+
+  background:
+    linear-gradient(rgba(7,22,17,.74), rgba(7,22,17,.74)),
+    url("https://kefo-tech.github.io/syria/assets/images/bg-horizontal.jpg") center center / cover no-repeat fixed,
+    linear-gradient(
+      160deg,
+      var(--bg1),
+      var(--bg2) 38%,
+      var(--bg3) 72%,
+      var(--bg4)
+    );
+
+  user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+
+  overflow-x:hidden;
+}
+
+.page-shell{
+  min-height:100vh;
+  position:relative;
+}
+
+.hero-pattern{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.10;
+
+  background-image:
+    linear-gradient(
+      30deg,
+      rgba(213,176,107,.12) 12%,
+      transparent 12.5%,
+      transparent 87%,
+      rgba(213,176,107,.12) 87.5%,
+      rgba(213,176,107,.12)
+    ),
+    linear-gradient(
+      150deg,
+      rgba(213,176,107,.08) 12%,
+      transparent 12.5%,
+      transparent 87%,
+      rgba(213,176,107,.08) 87.5%,
+      rgba(213,176,107,.08)
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.015) 2%,
+      transparent 2.5%,
+      transparent 97%,
+      rgba(255,255,255,.015) 97.5%,
+      rgba(255,255,255,.015)
+    );
+
+  background-size:54px 92px, 54px 92px, 28px 28px;
+}
+
+.container{
+  width:min(1150px, 94%);
+  margin:auto;
+  padding:10px 0 calc(30px + var(--bottom-safe));
+  position:relative;
+  z-index:1;
+}
+
+.top-brand-row{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:14px;
+  margin-bottom:14px;
+}
+
+.install-wrap{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:0;
+  flex-shrink:0;
+}
+
+.install-pill{
+  border:none;
+  outline:none;
+  cursor:pointer;
+
+  color:#fff9ef;
+  font-family:inherit;
+  font-size:.92rem;
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.11),
+      rgba(255,255,255,.04)
+    );
+
+  border:1px solid rgba(213,176,107,.22);
+  border-radius:999px;
+
+  padding:13px 18px;
+
+  box-shadow:var(--shadow);
+  transition:.2s ease;
+}
+
+.install-pill:hover{
+  transform:translateY(-1px);
+}
+
+.weather-card-single{
+  position:relative;
+  overflow:hidden;
+
+  min-height:220px;
+  padding:16px 18px;
+
+  border-radius:30px;
+  border:none;
+
+  background:transparent;
+
+  box-shadow:none;
+
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+
+  margin-bottom:20px;
+}
+
+.weather-card-single::before{
+  display:none;
+}
+
+.weather-card-content{
+  position:relative;
+  z-index:3;
+
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  background:transparent !important;
+  box-shadow:none !important;
+  border:none !important;
+}
+
+.weather-top-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.weather-top-row.center{
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  text-align:center;
+}
+
+.weather-inline-main{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:10px 16px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(213,176,107,.18);
+
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,.25),
+    inset 0 0 10px rgba(213,176,107,.12);
+}
+
+.weather-inline-main .weather-temp{
+  font-size:1.8rem;
+  font-weight:900;
+}
+
+.weather-inline-main .weather-desc{
+  font-size:1rem;
+  font-weight:700;
+  color:#fff2d6;
+}
+
+.weather-card-title{
+  margin:0;
+
+  font-size:clamp(1.2rem, 2.4vw, 1.9rem);
+  font-weight:900;
+
+  color:#fff9ef;
+}
+
+.weather-status-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:8px 12px;
+
+  border-radius:999px;
+
+  font-size:.78rem;
+  color:#f7ecd6;
+
+  border:1px solid rgba(213,176,107,.12);
+  background:rgba(255,255,255,.05);
+
+  width:fit-content;
+}
+
+.weather-main-row{
+  display:block;
+
+  background:transparent !important;
+  box-shadow:none !important;
+  border:none !important;
+}
+
+.weather-main-info{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  align-items:flex-end;
+  text-align:right;
+
+  background:transparent !important;
+  box-shadow:none !important;
+  border:none !important;
+}
+
+.weather-temp-line{
+  display:none;
+
+  align-items:flex-end;
+  justify-content:flex-end;
+
+  gap:12px;
+
+  flex-wrap:wrap;
+  width:100%;
+}
+
+.weather-temp{
+  font-size:clamp(2.8rem, 6vw, 5rem);
+  font-weight:900;
+  line-height:1;
+}
+
+.weather-desc{
+  font-size:clamp(1rem, 2vw, 1.45rem);
+  font-weight:800;
+
+  color:#fff2d6;
+
+  padding-bottom:8px;
+}
+
+.weather-meta-row{
+  width:100%;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.weather-next-box{
+  display:inline-flex;
+  align-items:center;
+
+  gap:10px;
+
+  padding:12px 16px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(213,176,107,.10);
+
+  color:#f8f1dc;
+
+  width:fit-content;
+  max-width:100%;
+
+  font-size:clamp(.84rem, 1.6vw, 1rem);
+  line-height:1.4;
+}
+
+.weather-next-icon{
+  width:36px;
+  height:36px;
+
+  border-radius:50%;
+
+  display:grid;
+  place-items:center;
+
+  background:rgba(255,255,255,.08);
+
+  flex-shrink:0;
+
+  font-size:1rem;
+}
+
+.weather-location-inline{
+  font-size:clamp(1.4rem, 3.2vw, 2.3rem);
+  font-weight:900;
+
+  line-height:1.1;
+
+  color:#fff8eb;
+
+  text-align:left;
+
+  word-break:break-word;
+}
+
+.weather-location-box,
+.weather-location-name,
+.weather-location-label,
+.weather-location-note{
+  display:none;
+}
+
+
+/* =========================================================
+   مشهد الطقس
+   ========================================================= */
+
+.weather-scene{
+  position:absolute;
+  inset:0;
+
+  z-index:1;
+
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.weather-scene.day{
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      rgba(255,220,120,.22),
+      transparent 18%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(77,117,163,.08),
+      rgba(255,255,255,.01)
+    );
+}
+
+.weather-scene.night{
+  background:
+    radial-gradient(
+      circle at 14% 20%,
+      rgba(218,224,255,.12),
+      transparent 16%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(20,31,54,.28),
+      rgba(8,14,28,.06)
+    );
+}
+
+.sun,
+.moon{
+  position:absolute;
+
+  top:20px;
+  left:20px;
+
+  width:82px;
+  height:82px;
+
+  border-radius:50%;
+}
+
+.sun{
+  background:
+    radial-gradient(
+      circle,
+      #fff7b0 0%,
+      #ffd65c 45%,
+      #ffb300 72%,
+      rgba(255,179,0,.2) 100%
+    );
+
+  box-shadow:
+    0 0 28px rgba(255,208,89,.45),
+    0 0 60px rgba(255,208,89,.16);
+
+  animation:sunPulse 4s ease-in-out infinite;
+
+  display:none;
+}
+
+.moon{
+  background:
+    radial-gradient(
+      circle at 35% 35%,
+      #f8fbff 0%,
+      #d8e7ff 60%,
+      #b5c7ec 100%
+    );
+
+  box-shadow:0 0 22px rgba(200,225,255,.22);
+
+  display:none;
+}
+
+.moon::after{
+  content:"";
+
+  position:absolute;
+
+  top:7px;
+  left:22px;
+
+  width:62px;
+  height:62px;
+
+  border-radius:50%;
+
+  background:rgba(12,19,40,.95);
+}
+
+.stars{
+  position:absolute;
+  inset:0;
+  display:none;
+}
+
+.stars span{
+  position:absolute;
+
+  width:4px;
+  height:4px;
+
+  border-radius:50%;
+
+  background:#fff;
+
+  opacity:.75;
+
+  animation:starBlink 2.4s ease-in-out infinite;
+}
+
+.stars span:nth-child(1){
+  top:48px;
+  left:140px;
+  animation-delay:.3s;
+}
+
+.stars span:nth-child(2){
+  top:82px;
+  left:230px;
+  animation-delay:1s;
+}
+
+.stars span:nth-child(3){
+  top:66px;
+  left:420px;
+  animation-delay:1.6s;
+}
+
+.stars span:nth-child(4){
+  top:108px;
+  left:560px;
+  animation-delay:.8s;
+}
+
+.stars span:nth-child(5){
+  top:58px;
+  left:700px;
+  animation-delay:1.2s;
+}
+
+.cloud{
+  position:absolute;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.22),
+      rgba(255,255,255,.10)
+    );
+
+  box-shadow:
+    inset 0 -8px 18px rgba(0,0,0,.08);
+
+  opacity:.9;
+
+  display:none;
+}
+
+.cloud::before,
+.cloud::after{
+  content:"";
+
+  position:absolute;
+
+  background:inherit;
+
+  border-radius:50%;
+}
+
+.cloud::before{
+  width:46%;
+  height:80%;
+
+  top:-38%;
+  left:14%;
+}
+
+.cloud::after{
+  width:36%;
+  height:68%;
+
+  top:-24%;
+  right:15%;
+}
+
+.cloud.a{
+  width:210px;
+  height:68px;
+
+  top:86px;
+  left:220px;
+
+  animation:cloudMoveA 9s ease-in-out infinite;
+}
+
+.cloud.b{
+  width:146px;
+  height:50px;
+
+  top:156px;
+  left:74px;
+
+  opacity:.72;
+
+  animation:cloudMoveB 12s ease-in-out infinite;
+}
+
+.rain,
+.snow,
+.fog,
+.lightning{
+  position:absolute;
+  inset:0;
+
+  display:none;
+
+  pointer-events:none;
+}
+
+.rain span{
+  position:absolute;
+
+  width:3px;
+  height:22px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(190,230,255,0),
+      rgba(190,230,255,.95)
+    );
+
+  animation:rainFall 1s linear infinite;
+
+  opacity:.85;
+}
+
+.rain span:nth-child(1){
+  left:30%;
+  top:42%;
+  animation-delay:.1s;
+}
+
+.rain span:nth-child(2){
+  left:39%;
+  top:38%;
+  animation-delay:.3s;
+}
+
+.rain span:nth-child(3){
+  left:48%;
+  top:46%;
+  animation-delay:.6s;
+}
+
+.rain span:nth-child(4){
+  left:57%;
+  top:40%;
+  animation-delay:.2s;
+}
+
+.rain span:nth-child(5){
+  left:66%;
+  top:48%;
+  animation-delay:.7s;
+}
+
+.rain span:nth-child(6){
+  left:75%;
+  top:44%;
+  animation-delay:.4s;
+}
+
+.rain span:nth-child(7){
+  left:83%;
+  top:38%;
+  animation-delay:.9s;
+}
+
+.rain span:nth-child(8){
+  left:90%;
+  top:46%;
+  animation-delay:.5s;
+}
+
+.snow span{
+  position:absolute;
+
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.95);
+
+  box-shadow:0 0 8px rgba(255,255,255,.25);
+
+  animation:snowFall 5s linear infinite;
+}
+
+.fog span{
+  position:absolute;
+
+  left:-10%;
+
+  width:65%;
+  height:24px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0),
+      rgba(230,238,248,.16),
+      rgba(255,255,255,0)
+    );
+
+  filter:blur(4px);
+
+  animation:fogMove 9s linear infinite;
+}
+
+.fog span:nth-child(1){
+  top:72px;
+  animation-delay:0s;
+}
+
+.fog span:nth-child(2){
+  top:138px;
+  animation-delay:2.7s;
+}
+
+.fog span:nth-child(3){
+  top:220px;
+  animation-delay:5s;
+}
+
+.lightning span{
+  position:absolute;
+
+  right:34%;
+  top:112px;
+
+  width:0;
+  height:0;
+
+  border-left:14px solid transparent;
+  border-right:9px solid transparent;
+  border-top:44px solid rgba(255,250,200,.95);
+
+  transform:skewX(-12deg) rotate(12deg);
+
+  filter:
+    drop-shadow(
+      0 0 10px rgba(255,245,175,.3)
+    );
+
+  animation:flashStorm 3.6s infinite;
+}
+
+.scene-sunny .sun{
+  display:block;
+}
+
+.scene-night-clear .moon,
+.scene-night-cloudy .moon,
+.scene-night-rainy .moon,
+.scene-night-snowy .moon{
+  display:block;
+}
+
+.scene-night-clear .stars,
+.scene-night-cloudy .stars,
+.scene-night-rainy .stars,
+.scene-night-snowy .stars{
+  display:block;
+}
+
+.scene-partly-cloudy .sun{
+  display:block;
+}
+
+.scene-cloudy .cloud,
+.scene-partly-cloudy .cloud,
+.scene-rainy .cloud,
+.scene-snowy .cloud,
+.scene-stormy .cloud,
+.scene-foggy .cloud,
+.scene-night-cloudy .cloud,
+.scene-night-rainy .cloud,
+.scene-night-snowy .cloud{
+  display:block;
+}
+
+.scene-rainy .rain,
+.scene-night-rainy .rain{
+  display:block;
+}
+
+.scene-snowy .snow,
+.scene-night-snowy .snow{
+  display:block;
+}
+
+.scene-foggy .fog{
+  display:block;
+}
+
+.scene-stormy .rain,
+.scene-stormy .lightning{
+  display:block;
+}
+
+
+/* =========================================================
+   أسعار العملات والذهب
+   ========================================================= */
+
+.market-rates{
+  width:100%;
+
+  margin-top:2px;
+  padding:12px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.065),
+      rgba(255,255,255,.025)
+    );
+
+  border:1px solid rgba(213,176,107,.14);
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.18),
+    inset 0 0 20px rgba(213,176,107,.025);
+
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+
+  overflow:hidden;
+}
+
+.market-section{
+  width:100%;
+}
+
+.market-section + .market-section{
+  margin-top:8px;
+  padding-top:8px;
+
+  border-top:1px solid rgba(213,176,107,.08);
+}
+
+.market-section-header{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  gap:10px;
+
+  margin-bottom:6px;
+}
+
+.market-section-title{
+  display:flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  color:#fff8e9;
+
+  font-size:.72rem;
+  font-weight:900;
+
+  white-space:nowrap;
+}
+
+.market-section-icon{
+  font-size:.9rem;
+  line-height:1;
+}
+
+.market-section-label{
+  color:rgba(216,204,178,.68);
+
+  font-size:.56rem;
+
+  white-space:nowrap;
+}
+
+.market-ticker{
+  width:100%;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  padding:2px 1px 5px;
+
+  direction:rtl;
+
+  scrollbar-width:none;
+
+  -webkit-overflow-scrolling:touch;
+}
+
+.market-ticker::-webkit-scrollbar{
+  display:none;
+}
+
+.market-item{
+  flex:0 0 auto;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  min-height:36px;
+
+  padding:6px 9px;
+
+  border-radius:13px;
+
+  background:rgba(255,255,255,.045);
+
+  border:1px solid rgba(255,255,255,.065);
+
+  white-space:nowrap;
+}
+
+.market-item-main{
+  display:flex;
+
+  align-items:center;
+
+  gap:4px;
+}
+
+.market-flag,
+.gold-icon{
+  font-size:.9rem;
+  line-height:1;
+}
+
+.market-code{
+  font-size:.65rem;
+
+  font-weight:900;
+
+  color:#fff8eb;
+}
+
+.market-name{
+  font-size:.62rem;
+
+  color:#d8ccb2;
+}
+
+.market-prices{
+  display:flex;
+
+  align-items:center;
+
+  gap:4px;
+
+  font-size:.58rem;
+
+  color:#d8ccb2;
+}
+
+.market-prices strong{
+  color:#fff8eb;
+
+  font-size:.65rem;
+
+  font-weight:900;
+}
+
+.currency-item .market-prices strong:first-of-type{
+  color:#dcebdc;
+}
+
+.currency-item .market-prices strong:last-of-type{
+  color:#f1d99c;
+}
+
+.market-separator{
+  opacity:.35;
+}
+
+.market-loading{
+  width:100%;
+
+  padding:7px 4px;
+
+  color:#d8ccb2;
+
+  font-size:.65rem;
+
+  white-space:nowrap;
+
+  text-align:right;
+}
+
+.market-error{
+  width:100%;
+
+  padding:7px 4px;
+
+  color:#e5b9a8;
+
+  font-size:.65rem;
+
+  white-space:nowrap;
+
+  text-align:right;
+}
+
+.market-footer{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  gap:8px;
+
+  margin-top:4px;
+  padding-top:7px;
+
+  border-top:1px solid rgba(213,176,107,.07);
+
+  color:rgba(216,204,178,.68);
+
+  font-size:.52rem;
+
+  line-height:1.4;
+}
+
+.market-source{
+  white-space:nowrap;
+}
+
+#marketSource{
+  color:#d9c38e;
+}
+
+
+/* =========================================================
+   الخدمات
+   ========================================================= */
+
+.services-section{
+  margin-top:8px;
+}
+
+.section-head{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  gap:12px;
+
+  margin-bottom:14px;
+}
+
+.section-title-wrap{
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+}
+
+.section-line{
+  width:52px;
+  height:2px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(213,176,107,0),
+      rgba(213,176,107,.9),
+      rgba(213,176,107,0)
+    );
+}
+
+.services-title{
+  margin:0;
+
+  font-size:clamp(1rem, 1.9vw, 1.16rem);
+  font-weight:900;
+
+  color:#fff7e5;
+}
+
+.visitors-chip{
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:10px 14px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.07);
+
+  border:1px solid rgba(213,176,107,.14);
+
+  color:#f7ecd6;
+
+  box-shadow:var(--shadow);
+}
+
+.visitors-label{
+  font-size:.8rem;
+  color:var(--muted);
+}
+
+.visitors-count{
+  min-width:30px;
+
+  text-align:center;
+
+  font-size:1rem;
+  font-weight:900;
+
+  color:#fff8eb;
+}
+
+.services-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+
+  gap:14px;
+}
+
+.service-btn{
+  text-decoration:none;
+
+  color:#fff;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,.03),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.07),
+      rgba(255,255,255,.035)
+    );
+
+  border:1px solid rgba(213,176,107,.14);
+
+  border-radius:28px;
+
+  min-height:132px;
+
+  padding:18px 12px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  gap:12px;
+
+  transition:.24s ease;
+
+  box-shadow:var(--shadow);
+}
+
+.service-btn:hover{
+  transform:translateY(-3px);
+}
+
+.service-icon{
+  width:82px;
+  height:82px;
+
+  position:relative;
+
+  display:grid;
+  place-items:center;
+
+  clip-path:
+    polygon(
+      25% 4%,
+      75% 4%,
+      100% 50%,
+      75% 96%,
+      25% 96%,
+      0 50%
+    );
+
+  background:
+    linear-gradient(
+      145deg,
+      #f4d98b,
+      #9f7632 48%,
+      #f1cd78
+    );
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.38),
+    0 0 18px rgba(213,176,107,.22);
+}
+
+.service-icon::before{
+  content:"";
+
+  position:absolute;
+
+  inset:4px;
+
+  clip-path:inherit;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,.10),
+      transparent 58%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(14,55,44,.94),
+      rgba(6,24,19,.96)
+    );
+
+  z-index:1;
+}
+
+.service-icon::after{
+  content:"";
+
+  position:absolute;
+
+  inset:9px;
+
+  clip-path:inherit;
+
+  border:1px solid rgba(213,176,107,.28);
+
+  z-index:2;
+
+  pointer-events:none;
+}
+
+.service-icon-img{
+  width:80px;
+  height:80px;
+
+  object-fit:contain;
+
+  display:block;
+
+  position:relative;
+
+  z-index:3;
+}
+
+.service-title{
+  font-size:clamp(.9rem, 1.8vw, 1.02rem);
+
+  font-weight:900;
+
+  color:#fff9ef;
+}
+
+.service-sub{
+  font-size:clamp(.7rem, 1.42vw, .82rem);
+
+  color:var(--muted);
+
+  line-height:1.45;
+}
+
+
+/* =========================================================
+   الشريط السفلي
+   ========================================================= */
+
+.fixed-bottom-wrap{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  z-index:50;
+
+  padding:
+    8px
+    10px
+    calc(8px + env(safe-area-inset-bottom));
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7,22,17,0),
+      rgba(7,22,17,.74) 30%,
+      rgba(7,22,17,.97)
+    );
+
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.social-fixed-bar{
+  width:min(1150px, 94%);
+
+  margin:0 auto 8px;
+
+  display:grid;
+
+  grid-template-columns:repeat(5, 1fr);
+
+  gap:8px;
+}
+
+.social-link-btn{
+  height:46px;
+
+  border-radius:16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.10),
+      rgba(255,255,255,.04)
+    );
+
+  border:1px solid rgba(213,176,107,.18);
+
+  display:grid;
+  place-items:center;
+
+  color:#eaf6ff;
+
+  text-decoration:none;
+
+  box-shadow:var(--shadow);
+}
+
+.social-link-btn svg{
+  width:20px;
+  height:20px;
+
+  stroke:#f9f2df;
+
+  fill:none;
+
+  stroke-width:1.9;
+
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.fixed-copyright{
+  width:min(1150px, 94%);
+
+  margin:0 auto;
+
+  text-align:center;
+
+  color:#f0e3c0;
+
+  font-size:clamp(.74rem, 1.5vw, .9rem);
+
+  padding:10px 8px 2px;
+
+  border-top:1px solid rgba(213,176,107,.12);
+}
+
+.share-fab{
+  position:fixed;
+
+  left:14px;
+  bottom:98px;
+
+  z-index:60;
+
+  width:58px;
+  height:58px;
+
+  border:none;
+  outline:none;
+
+  cursor:pointer;
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.13),
+      rgba(255,255,255,.05)
+    );
+
+  border:1px solid rgba(213,176,107,.22);
+
+  box-shadow:var(--shadow);
+
+  display:grid;
+  place-items:center;
+}
+
+.share-fab svg{
+  width:26px;
+  height:26px;
+
+  stroke:#fff6e5;
+
+  fill:none;
+
+  stroke-width:1.9;
+
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.toast{
+  position:fixed;
+
+  left:50%;
+  bottom:128px;
+
+  transform:
+    translateX(-50%)
+    translateY(20px);
+
+  z-index:80;
+
+  min-width:180px;
+  max-width:85vw;
+
+  text-align:center;
+
+  padding:12px 16px;
+
+  border-radius:18px;
+
+  background:rgba(18,26,23,.92);
+
+  border:1px solid rgba(213,176,107,.22);
+
+  color:#fff6e1;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.25s ease;
+}
+
+.toast.show{
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+/* =========================================================
+   الحركات
+   ========================================================= */
+
+@keyframes sunPulse{
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.06);
+  }
+}
+
+@keyframes starBlink{
+  0%,100%{
+    opacity:.25;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:1;
+    transform:scale(1.25);
+  }
+}
+
+@keyframes cloudMoveA{
+  0%,100%{
+    transform:translateX(0);
+  }
+
+  50%{
+    transform:translateX(-12px);
+  }
+}
+
+@keyframes cloudMoveB{
+  0%,100%{
+    transform:translateX(0);
+  }
+
+  50%{
+    transform:translateX(15px);
+  }
+}
+
+@keyframes rainFall{
+  0%{
+    transform:translateY(-8px);
+    opacity:0;
+  }
+
+  20%{
+    opacity:.9;
+  }
+
+  100%{
+    transform:translateY(38px);
+    opacity:0;
+  }
+}
+
+@keyframes snowFall{
+  0%{
+    transform:
+      translateY(-8px)
+      translateX(0);
+
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      translateY(54px)
+      translateX(10px);
+
+    opacity:0;
+  }
+}
+
+@keyframes fogMove{
+  0%{
+    transform:translateX(-18%);
+    opacity:0;
+  }
+
+  15%,70%{
+    opacity:1;
+  }
+
+  100%{
+    transform:translateX(135%);
+    opacity:0;
+  }
+}
+
+@keyframes flashStorm{
+  0%,82%,100%{
+    opacity:0;
+  }
+
+  84%{
+    opacity:1;
+  }
+
+  86%{
+    opacity:0;
+  }
+
+  88%{
+    opacity:1;
+  }
+
+  90%{
+    opacity:0;
+  }
+}
+
+
+/* =========================================================
+   الشاشات المتوسطة والهاتف
+   ========================================================= */
+
+@media (max-width:700px){
+
+  body{
+    background:
+      linear-gradient(
+        rgba(7,22,17,.76),
+        rgba(7,22,17,.76)
+      ),
+      url("../assets/images/bg-vertical.jpg")
+        center center / cover no-repeat fixed,
+      linear-gradient(
+        160deg,
+        var(--bg1),
+        var(--bg2) 38%,
+        var(--bg3) 72%,
+        var(--bg4)
+      );
+  }
+
+  .container{
+    width:97%;
+    padding:
+      10px
+      0
+      calc(24px + var(--bottom-safe));
+  }
+
+  .top-brand-row{
+    justify-content:flex-end;
+
+    gap:10px;
+
+    align-items:flex-start;
+  }
+
+  .weather-card-single{
+    padding:14px;
+
+    border-radius:24px;
+
+    min-height:auto;
+  }
+
+  .weather-temp{
+    font-size:2.5rem;
+  }
+
+  .weather-desc{
+    font-size:.96rem;
+
+    padding-bottom:0;
+  }
+
+  .weather-location-inline{
+    font-size:1.8rem;
+  }
+
+  .services-grid{
+    gap:10px;
+  }
+
+  .service-btn{
+    min-height:118px;
+  }
+
+  .service-sub{
+    display:none;
+  }
+
+  .social-fixed-bar{
+    gap:6px;
+  }
+
+  .social-link-btn{
+    height:42px;
+  }
+
+
+  /* الأسعار على الهاتف */
+
+  .market-rates{
+    margin-top:0;
+
+    padding:9px 10px 7px;
+
+    border-radius:19px;
+  }
+
+  .market-section-header{
+    margin-bottom:5px;
+  }
+
+  .market-section-title{
+    font-size:.68rem;
+  }
+
+  .market-section-label{
+    font-size:.52rem;
+  }
+
+  .market-item{
+    min-height:34px;
+
+    padding:6px 8px;
+
+    border-radius:12px;
+  }
+
+  .market-code{
+    font-size:.62rem;
+  }
+
+  .market-name{
+    display:none;
+  }
+
+  .market-prices{
+    font-size:.56rem;
+  }
+
+  .market-prices strong{
+    font-size:.63rem;
+  }
+
+  .market-footer{
+    font-size:.49rem;
+  }
+}
+
+
+@media (max-width:480px){
+
+  .top-brand-row{
+    flex-direction:row;
+
+    align-items:center;
+
+    justify-content:flex-end;
+  }
+
+  .install-wrap{
+    margin-bottom:0;
+  }
+
+  .install-pill{
+    font-size:.78rem;
+
+    padding:10px 14px;
+  }
+
+  .weather-card-single{
+    padding:12px;
+
+    border-radius:22px;
+  }
+
+  .weather-card-title{
+    font-size:1.15rem;
+  }
+
+  .weather-temp{
+    font-size:2.35rem;
+  }
+
+  .weather-desc{
+    font-size:.92rem;
+  }
+
+  .weather-next-box{
+    font-size:.82rem;
+
+    padding:10px 12px;
+  }
+
+  .weather-next-icon{
+    width:30px;
+    height:30px;
+
+    font-size:.95rem;
+  }
+
+  .weather-meta-row{
+    align-items:flex-start;
+  }
+
+  .weather-location-inline{
+    font-size:1.5rem;
+  }
+
+  .visitors-chip{
+    padding:8px 10px;
+
+    gap:8px;
+  }
+
+  .visitors-label{
+    font-size:.68rem;
+  }
+
+  .service-btn{
+    min-height:104px;
+
+    padding:10px 6px;
+  }
+
+  .service-icon{
+    width:68px;
+    height:68px;
+  }
+
+  .service-icon::before{
+    inset:3px;
+  }
+
+  .service-icon::after{
+    inset:7px;
+  }
+
+  .service-icon-img{
+    width:60px;
+    height:60px;
+  }
+
+  .service-title{
+    font-size:.78rem;
+  }
+
+
+  /* قسم العملات والذهب */
+
+  .market-rates{
+    margin-top:0;
+
+    padding:7px 8px 6px;
+
+    border-radius:17px;
+  }
+
+  .market-section + .market-section{
+    margin-top:6px;
+
+    padding-top:6px;
+  }
+
+  .market-section-header{
+    gap:6px;
+
+    margin-bottom:4px;
+  }
+
+  .market-section-title{
+    font-size:.64rem;
+  }
+
+  .market-section-icon{
+    font-size:.8rem;
+  }
+
+  .market-section-label{
+    font-size:.48rem;
+  }
+
+  .market-ticker{
+    gap:5px;
+
+    padding:2px 0 4px;
+  }
+
+  .market-item{
+    min-height:31px;
+
+    padding:5px 7px;
+
+    border-radius:10px;
+
+    gap:5px;
+  }
+
+  .market-flag,
+  .gold-icon{
+    font-size:.76rem;
+  }
+
+  .market-code{
+    font-size:.57rem;
+  }
+
+  .market-prices{
+    gap:3px;
+
+    font-size:.50rem;
+  }
+
+  .market-prices strong{
+    font-size:.57rem;
+  }
+
+  .market-loading,
+  .market-error{
+    font-size:.60rem;
+
+    padding:5px 3px;
+  }
+
+  .market-footer{
+    font-size:.45rem;
+
+    padding-top:5px;
+  }
+
+  .social-link-btn{
+    height:40px;
+  }
+
+  .social-link-btn svg{
+    width:18px;
+    height:18px;
+  }
+
+  .share-fab{
+    left:12px;
+    bottom:87px;
+
+    width:52px;
+    height:52px;
+  }
+
+  .share-fab svg{
+    width:24px;
+    height:24px;
+  }
+}
+/* World OS layout adapters */
+body{background:linear-gradient(rgba(7,22,17,.74),rgba(7,22,17,.74)),url('https://kefo-tech.github.io/syria/assets/images/bg-horizontal.jpg') center/cover fixed,#071611!important;color:#f7f2e6!important}.shell{max-width:650px!important}.panel{background:linear-gradient(135deg,rgba(13,44,35,.94),rgba(28,90,73,.8))!important;border:1px solid rgba(213,176,107,.3)!important;box-shadow:0 18px 45px rgba(0,0,0,.28)!important}.brand{color:#d5b06b!important}.tile{background:linear-gradient(155deg,#194c3b,#0c2921)!important;border:1px solid rgba(213,176,107,.3)!important;box-shadow:0 8px 18px #0005!important}.tile:active{filter:brightness(1.25)}.primary{background:#d5b06b!important;color:#071611!important}.smallbtn{background:#174335!important;border-color:#d5b06b66!important}.temp{color:#f5d390!important}.field{background:#102f25!important;border-color:#d5b06b77!important}.setup h1{color:#d5b06b!important}header,footer{border-color:#d5b06b44!important}.muted{color:#d8ccb2!important}
