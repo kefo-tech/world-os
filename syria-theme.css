@@ -1962,3 +1962,36 @@ body{background:linear-gradient(rgba(7,22,17,.74),rgba(7,22,17,.74)),url('https:
 #home .content{padding-bottom:40px}#home footer{padding:7px 10px;background:#08241e}
 @keyframes worldCloud{to{transform:translateX(90px)}}@keyframes worldPulse{50%{box-shadow:0 0 60px 23px #ffd26e99}}@keyframes worldRain{to{transform:translateY(280px)}}
 @media(prefers-reduced-motion:reduce){.world-weather-card *{animation:none!important}}
+
+/* FIX 2026-11: explicit World OS mobile geometry, no Syria legacy selector collisions */
+html,body{min-height:100%;overflow-x:hidden}
+body{font-size:14px!important}
+.shell{width:100%;max-width:650px!important;min-height:100dvh!important;margin:0 auto!important;display:block!important}
+#home{min-height:100dvh;display:flex;flex-direction:column}
+#home header{padding:13px 16px!important;min-height:76px!important;background:#071c16ad}
+#home .brand{font-size:20px!important;letter-spacing:1.5px!important}
+#home .content{flex:1;padding:14px 12px 28px!important}
+#home .world-weather-card{height:auto!important;min-height:175px!important;max-height:none!important;padding:0!important;border-radius:22px!important;margin-bottom:18px!important}
+#home .world-weather-content{padding:18px!important;min-height:175px!important;display:block!important}
+#home .world-weather-card .weather{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:10px!important;min-height:85px}
+#home .world-weather-card .weather>div:first-child{position:relative;z-index:3;max-width:68%;min-width:0}
+#home .world-weather-card .weather>div:last-child{font-size:31px!important;opacity:.85;z-index:2}
+#home .world-weather-card .weather-scene{opacity:.38!important;z-index:0!important;overflow:hidden!important}
+#home .world-weather-card .weather-scene .sun{width:46px!important;height:46px!important;right:19%!important;top:15%!important;box-shadow:0 0 22px 8px #ffd26e55!important}
+#home .world-weather-card .weather-scene .moon{width:42px!important;height:42px!important}
+#home .world-weather-card .temp{font-size:29px!important;line-height:1.2!important;margin:6px 0!important}
+#home .world-weather-card .muted{font-size:12px!important;line-height:1.5!important}
+#home .world-weather-card .address{display:flex!important;align-items:center!important;gap:9px!important;justify-content:space-between!important;margin-top:10px!important;padding-top:10px!important;min-height:49px!important;line-height:1.5!important}
+#home .world-weather-card .address .smallbtn{float:none!important;flex-shrink:0;padding:8px 12px!important}
+#home h3#servicesLabel{font-size:19px!important;margin:12px 3px 13px!important;color:#f8e4bc!important}
+#home .grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important}
+#home .tile{width:100%!important;min-width:0!important;min-height:91px!important;height:91px!important;padding:8px 4px!important;gap:5px!important;border-radius:14px!important;box-shadow:0 5px 14px #0005!important}
+#home .tile span:first-child{font-size:25px!important;line-height:1.2!important}
+#home .tile span:last-child{font-size:12px!important;line-height:1.35!important;text-align:center!important;overflow-wrap:anywhere!important}
+#home .world-bottom{position:relative!important;bottom:auto!important;flex-shrink:0!important;min-height:59px!important;padding:8px 12px!important;z-index:2!important}
+#home .world-bottom a{width:34px!important;height:34px!important;font-size:16px!important}
+#home footer{flex-shrink:0!important;padding:9px!important;font-size:11px!important}
+#home .world-share{position:fixed!important;bottom:83px!important;right:13px!important;width:43px!important;height:43px!important;font-size:22px!important;opacity:.92!important}
+#home #detail{margin-top:14px!important}
+@media(min-width:650px){#home .grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:360px){#home .tile{height:85px!important;min-height:85px!important}#home .tile span:last-child{font-size:11px!important}}
