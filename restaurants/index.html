@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+    <!-- SEO & Social -->
+    <meta name="description" content="KeFo Food - اكتشف أفضل المطاعم القريبة منك. مشاوي، شاورما، بيتزا، حلويات والمزيد">
+    <meta name="theme-color" content="#8b1a2b">
+    <meta property="og:title" content="KeFo Food | Syria OS">
+    <meta property="og:description" content="منصة المطاعم الذكية - اكتشف، قيّم، وشارك أفضل المطاعم">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1555396273-367ea4eb4db5">
+    <meta property="og:type" content="website">
+    
+    <title>KeFo Food | اكتشف أفضل المطاعم</title>
+
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/protection.css">
+</head>
+
+<body class="restaurants-body">
+
+    <!-- SKELETON LOADER -->
+    <div id="skeletonLoader" class="skeleton-container">
+        <div class="skeleton-hero"></div>
+        <div class="skeleton-categories">
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+            <div class="skeleton-chip"></div>
+        </div>
+        <div class="skeleton-cards">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+    </div>
+
+    <!-- HERO SWIPER -->
+    <section class="restaurants-hero">
+        <div class="hero-slider" id="heroSlider">
+            <div class="hero-slide active">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5" alt="مطاعم">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" alt="مطعم فاخر">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0" alt="أجواء طعام">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" alt="أطباق شهية">
+            </div>
+        </div>
+        <div class="hero-dots" id="heroDots">
+            <span class="hero-dot active"></span>
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+        </div>
+        <div class="restaurants-hero-overlay"></div>
+        <div class="restaurants-hero-content">
+            <h1>
+                <span class="hero-icon">🍽️</span>
+                <span class="hero-title-text">KeFo Food</span>
+            </h1>
+            <p class="hero-subtitle" id="heroSubtitle">اكتشف أشهى المأكولات حولك</p>
+            <div class="hero-stats">
+                <span id="totalRestaurants">🟠 جاري التحميل...</span>
+                <span id="dailyVisits">👥 زوار اليوم: ...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH BAR -->
+    <div class="restaurants-search">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" 
+                   id="searchInput" 
+                   class="search-input" 
+                   placeholder="ابحث عن مطعم، نوع طعام، أو منطقة..."
+                   autocomplete="off">
+            <button id="clearSearch" class="search-clear" style="display:none;">✕</button>
+        </div>
+        <div id="searchSuggestions" class="search-suggestions" style="display:none;"></div>
+    </div>
+
+    <!-- CATEGORIES — شبكة 3×2 -->
+    <section class="restaurants-categories" aria-label="تصنيفات المطاعم">
+        <button class="restaurants-category active" data-category="all" aria-pressed="true">
+            <span class="category-icon">🌟</span>
+            <span class="category-name">الجميع</span>
+        </button>
+        <button class="restaurants-category" data-category="مشاوي" aria-pressed="false">
+            <span class="category-icon">🍖</span>
+            <span class="category-name">مشاوي</span>
+        </button>
+        <button class="restaurants-category" data-category="شاورما" aria-pressed="false">
+            <span class="category-icon">🌯</span>
+            <span class="category-name">شاورما</span>
+        </button>
+        <button class="restaurants-category" data-category="بيتزا" aria-pressed="false">
+            <span class="category-icon">🍕</span>
+            <span class="category-name">بيتزا</span>
+        </button>
+        <button class="restaurants-category" data-category="حلويات" aria-pressed="false">
+            <span class="category-icon">🧁</span>
+            <span class="category-name">حلويات</span>
+        </button>
+        <button class="restaurants-category" data-category="مقاهي" aria-pressed="false">
+            <span class="category-icon">☕</span>
+            <span class="category-name">مقاهي</span>
+        </button>
+    </section>
+
+    <!-- ACTIVE FILTERS -->
+    <div id="activeFilters" class="active-filters" style="display:none;">
+        <span class="filter-label">التصفية:</span>
+        <span id="filterTag" class="filter-tag"></span>
+        <button id="clearFilters" class="filter-clear">✕ مسح التصفية</button>
+    </div>
+
+    <!-- RESULTS COUNT -->
+    <div id="resultsInfo" class="results-info" style="display:none;">
+        <span id="resultsCount"></span>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state" style="display:none;">
+        <div class="empty-icon">🍽️</div>
+        <h3>لا توجد نتائج</h3>
+        <p id="emptyMessage">لم نعثر على مطاعم تطابق بحثك</p>
+        <button id="resetSearch" class="empty-btn">تصفح كل المطاعم</button>
+    </div>
+
+    <!-- LIST -->
+    <main class="restaurants-list" id="restaurantsList" aria-live="polite">
+    </main>
+
+    <!-- BACK TO TOP -->
+    <button id="backToTop" class="back-to-top" title="العودة للأعلى" style="display:none;">
+        ⬆
+    </button>
+
+    <!-- BOTTOM NAV — 5 أزرار iOS-style -->
+    <nav class="restaurants-bottom-nav" aria-label="القائمة السفلية">
+        <button class="restaurants-nav-btn active" data-tab="home" aria-label="الرئيسية">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">الرئيسية</span>
+        </button>
+        <button class="restaurants-nav-btn" data-tab="search" aria-label="بحث">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">بحث</span>
+        </button>
+        <button id="addRestaurantBtn" class="restaurants-nav-add" aria-label="أضف مطعمك">
+            <span class="nav-add-icon">➕</span>
+        </button>
+        <button id="favoritesBtn" class="restaurants-nav-btn" data-tab="favorites" aria-label="المفضلة">
+            <span class="nav-icon">❤️</span>
+            <span class="nav-label">المفضلة</span>
+            <span id="favCount" class="nav-badge" style="display:none;">0</span>
+        </button>
+        <button class="restaurants-nav-btn" data-tab="share" aria-label="مشاركة">
+            <span class="nav-icon">📤</span>
+            <span class="nav-label">مشاركة</span>
+        </button>
+    </nav>
+
+    <!-- COPYRIGHT -->
+    <div class="restaurants-copyright">
+        © Syria OS | KeFo.tech 2026
+    </div>
+
+    <link rel="stylesheet" href="./css/style.css?v=1.0.2">
+    <script type="module" src="./js/app.js?v=1.0.2"></script>
+    <script type="module" src="./js/app2.js?v=1.0.2"></script>
+
+</body>
+</html>
