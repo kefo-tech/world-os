@@ -1,0 +1,1055 @@
+/* =========================================================
+   KEFO FOOD
+   RESTAURANT.CSS — V2
+========================================================= */
+
+:root {
+  --bg: #efe2cb;
+  --card: #f8ecda;
+  --gold: #c79a5c;
+  --dark: #48291d;
+  --accent: #7b1523;
+  --line: #dcc5a4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.restaurant-page {
+  font-family: Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  padding-bottom: 130px;
+}
+
+/* ==========================
+   TOP BAR
+========================== */
+.restaurant-top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 9990;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(239, 226, 203, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--dark);
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.top-bar-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.share-btn {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+.share-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ==========================
+   HERO
+========================== */
+.restaurant-hero {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.restaurant-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.restaurant-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(22, 10, 7, 0.35), rgba(22, 10, 7, 0.72));
+}
+
+.restaurant-hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 2;
+  color: white;
+}
+
+.restaurant-hero-content h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.restaurant-hero-content p {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.restaurant-hero-meta {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  opacity: 0.9;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ==========================
+   RATING ROW
+========================== */
+.restaurant-rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--card);
+  border-bottom: 2px solid var(--line);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rating-stars-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rating-average {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #e67e22;
+}
+
+.stars-display {
+  display: flex;
+  gap: 2px;
+  font-size: 1rem;
+}
+
+.stars-display .star-filled {
+  color: #f39c12;
+}
+
+.stars-display .star-half {
+  color: #f39c12;
+  position: relative;
+}
+
+.stars-display .star-empty {
+  color: #dcc5a4;
+}
+
+.rating-count {
+  font-size: 0.75rem;
+  color: #8a6f57;
+  font-weight: 700;
+}
+
+.rate-btn {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.rate-btn:hover {
+  background: #b88341;
+  transform: translateY(-1px);
+}
+
+.rate-btn.voted {
+  background: #999;
+  pointer-events: none;
+}
+
+/* ==========================
+   RATING MODAL
+========================== */
+.rating-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 99995;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+.rating-modal-content {
+  background: white;
+  border-radius: 24px;
+  padding: 28px 22px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.rating-modal-close {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #999;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.rating-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.rating-modal-content h3 {
+  margin-bottom: 20px;
+  color: #48291d;
+  font-size: 1.2rem;
+}
+
+.rating-stars-input {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  direction: ltr;
+}
+
+.rating-stars-input span {
+  cursor: pointer;
+  color: #dcc5a4;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.rating-stars-input span:hover {
+  transform: scale(1.2);
+}
+
+.rating-stars-input span.active {
+  color: #f39c12;
+}
+
+.rating-stars-input span.selected {
+  color: #f39c12;
+  animation: starPop 0.3s ease;
+}
+
+.rating-hint {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 20px;
+  min-height: 20px;
+}
+
+.rating-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.rating-cancel-btn {
+  background: #f0f0f0;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.rating-cancel-btn:hover {
+  background: #e0e0e0;
+}
+
+.rating-submit-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rating-submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.rating-submit-btn:not(:disabled):hover {
+  background: #6d1220;
+}
+
+/* ==========================
+   QUICK INFO (شريط مضغوط)
+========================== */
+.restaurant-quick-info {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  flex-wrap: wrap;
+}
+
+.quick-info-item {
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #5a3d2e;
+  justify-content: center;
+}
+
+.quick-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* ==========================
+   MENU SEARCH
+========================== */
+.restaurant-menu-search {
+  padding: 8px 14px 0;
+}
+
+.restaurant-menu-search .search-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 0 12px;
+}
+
+.restaurant-menu-search .search-wrapper:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(199, 154, 92, 0.15);
+}
+
+.restaurant-menu-search .search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px 0;
+  font-size: 0.9rem;
+  color: var(--dark);
+  outline: none;
+  font-family: inherit;
+}
+
+.restaurant-menu-search .search-input::placeholder {
+  color: #b8a388;
+}
+
+.restaurant-menu-search .search-icon {
+  margin-left: 6px;
+  opacity: 0.7;
+}
+
+.restaurant-menu-search .search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #999;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.restaurant-menu-search .search-clear:hover {
+  background: #eee;
+}
+
+/* ==========================
+   FILTERS
+========================== */
+.restaurant-filters {
+  position: sticky;
+  top: 52px;
+  z-index: 600;
+  background: var(--bg);
+  display: flex;
+  gap: 12px;
+  overflow: auto;
+  padding: 14px;
+  scrollbar-width: none;
+  border-bottom: 1px solid #e2cfb2;
+}
+
+.restaurant-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.restaurant-filter {
+  border: none;
+  cursor: pointer;
+  padding: 0 18px;
+  height: 46px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 2px solid var(--line);
+  color: #633829;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.restaurant-filter.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ==========================
+   ACTIVE FILTERS
+========================== */
+.active-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 4px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.75rem;
+  color: #8a6f57;
+  font-weight: 700;
+}
+
+.filter-tag {
+  background: var(--accent);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.filter-clear {
+  background: none;
+  border: 1px solid #ccc;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  color: #888;
+  transition: all 0.2s;
+}
+
+.filter-clear:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ==========================
+   RESULTS INFO
+========================== */
+.results-info {
+  padding: 6px 14px 2px;
+}
+
+.results-info span {
+  font-size: 0.8rem;
+  color: #6f5e4a;
+  font-weight: 700;
+}
+
+/* ==========================
+   MENU
+========================== */
+.restaurant-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 18px 14px;
+}
+
+/* ==========================
+   FOOD CARD
+========================== */
+.food-card {
+  position: relative;
+  background: #1f2937;
+  border-radius: 28px;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  min-height: 180px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.18);
+}
+
+.food-card:hover {
+  transform: translateY(-2px);
+}
+
+.food-card.active {
+  height: auto;
+}
+
+/* ==========================
+   CLOSE BUTTON
+========================== */
+.food-close {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #ff6b35;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: none;
+  z-index: 30;
+}
+
+.food-card.active .food-close {
+  display: block;
+}
+
+/* ==========================
+   PREVIEW
+========================== */
+.food-preview {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.food-preview img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ff6b35;
+  transition: 0.45s;
+  flex-shrink: 0;
+}
+
+.food-card.active .food-preview img {
+  transform: rotate(12deg) scale(1.08);
+}
+
+.food-info {
+  flex: 1;
+}
+
+.food-info h2 {
+  font-size: 1.45rem;
+  color: white;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.food-prices {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.food-old-price {
+  color: #b5b5b5;
+  text-decoration: line-through;
+  font-size: 0.95rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.food-price {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: #ff6b35;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ==========================
+   DETAILS
+========================== */
+.food-details {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease;
+  padding: 0 22px;
+}
+
+.food-card.active .food-details {
+  max-height: 900px;
+  opacity: 1;
+  pointer-events: auto;
+  padding: 0 22px 22px;
+}
+
+/* ==========================
+   HEADINGS
+========================== */
+.food-details h3 {
+  margin: 18px 0 12px;
+  color: #ffb088;
+  font-size: 1rem;
+}
+
+/* ==========================
+   DESCRIPTION SCROLL
+========================== */
+.food-description {
+  background: #374151;
+  border-radius: 18px;
+  padding: 14px;
+  line-height: 1.9;
+  font-size: 0.92rem;
+  color: #f3f3f3;
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 18px;
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b35 #2a3342;
+}
+
+.food-description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.food-description::-webkit-scrollbar-thumb {
+  background: #ff6b35;
+  border-radius: 999px;
+}
+
+.food-description::-webkit-scrollbar-track {
+  background: #2a3342;
+  border-radius: 999px;
+}
+
+/* ==========================
+   CATEGORY
+========================== */
+.food-category {
+  display: inline-block;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: #ff6b35;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+/* ==========================
+   FAVORITE BUTTON (وجبات)
+========================== */
+.meal-fav-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 18px;
+  background: #ff6b35;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.meal-fav-btn:hover {
+  background: #ff824f;
+  transform: translateY(-2px);
+}
+
+/* ==========================
+   ACTION BAR
+========================== */
+.restaurant-action-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  height: 78px;
+  background: #3b231b;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  z-index: 9999;
+  box-shadow: 0 -8px 22px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn {
+  flex: 1;
+  height: 56px;
+  border: none;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f6e4cb;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: 0.22s;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.action-btn span {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.action-icon {
+  font-size: 1.2rem;
+}
+
+/* ==========================
+   EMPTY STATE
+========================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
+.empty-state h3 {
+  font-size: 1.2rem;
+  color: #59251c;
+  margin-bottom: 6px;
+}
+
+.empty-state p {
+  font-size: 0.85rem;
+  color: #8a6f57;
+  margin-bottom: 16px;
+}
+
+.empty-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.empty-btn:hover {
+  opacity: 0.9;
+}
+
+/* ==========================
+   SKELETON
+========================== */
+.skeleton-container {
+  position: absolute;
+  inset: 0;
+  z-index: 9998;
+  background: var(--bg);
+  padding: 0 14px;
+}
+
+.skeleton-hero {
+  height: 220px;
+  background: linear-gradient(90deg, #e8d9bf 25%, #f0e4cc 50%, #e8d9bf 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin: 0 -14px 10px;
+}
+
+.skeleton-rating-row {
+  height: 50px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #e8d9bf 25%, #f0e4cc 50%, #e8d9bf 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 10px;
+}
+
+.skeleton-info-row {
+  height: 50px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #e8d9bf 25%, #f0e4cc 50%, #e8d9bf 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 16px;
+}
+
+.skeleton-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.skeleton-chip {
+  width: 90px;
+  height: 46px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e8d9bf 25%, #f0e4cc 50%, #e8d9bf 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skeleton-meal-card {
+  height: 180px;
+  border-radius: 28px;
+  background: linear-gradient(90deg, #e8d9bf 25%, #f0e4cc 50%, #e8d9bf 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ==========================
+   BACK TO TOP
+========================== */
+.back-to-top {
+  position: fixed;
+  bottom: 125px;
+  left: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 9997;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  animation: fadeInUp 0.3s ease;
+}
+
+.back-to-top:hover {
+  transform: translateY(-3px);
+}
+
+/* ==========================
+   TOAST
+========================== */
+.kefo-toast {
+  position: fixed;
+  bottom: 130px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #261711;
+  color: #f2dec5;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  z-index: 99999;
+  opacity: 0;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.kefo-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================
+   COPYRIGHT
+========================== */
+.restaurants-copyright {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24px;
+  background: #261711;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d8c4a7;
+  font-size: 0.68rem;
+  z-index: 10000;
+}
+
+/* ==========================
+   FOCUS VISIBLE
+========================== */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ==========================
+   ANIMATIONS
+========================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes starPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================
+   MOBILE
+========================== */
+@media (max-width: 600px) {
+  .food-preview {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .food-preview img {
+    width: 95px;
+    height: 95px;
+  }
+
+  .food-info h2 {
+    font-size: 1.15rem;
+  }
+
+  .food-description {
+    max-height: 180px;
+  }
+
+  .restaurant-hero-content h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .restaurant-hero-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .restaurant-rating-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .quick-info-item {
+    min-width: 70px;
+    font-size: 0.72rem;
+    padding: 10px;
+  }
+}
